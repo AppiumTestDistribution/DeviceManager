@@ -27,3 +27,4 @@ Add following dependency to your pom.xml
 * getAllSimulators - Gets all available or installed simulators in macOS
 * getSimulatorUDID - Returns UDID of simulator needed.
 * getSimulatorState - Returns state of Simulator e.g `booted`, `shutdown`, etc
+* bootSimulator - Will boot the specified Simulator

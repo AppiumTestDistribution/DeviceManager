@@ -57,4 +57,14 @@ public class SimulatorTest {
                 "iPhone 6s", "10.1", "iOS");
         assertNotNull(simulatorState);
     }
+
+    @Test
+    public void bootSimulatorAndCheckStatus() throws Throwable {
+        deviceManager = new DeviceManager();
+        deviceManager.bootSimulator(
+                "iPhone 6", "8.4", "iOS");
+        String deviceState = deviceManager.getSimulatorState("iPhone 6",
+                "8.4", "iOS");
+        assertEquals(deviceState,"Booted");
+    }
 }
