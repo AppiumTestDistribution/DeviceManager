@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.HashMap;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 public class SimulatorTest {
@@ -13,9 +14,9 @@ public class SimulatorTest {
     DeviceManager deviceManager;
 
     @Test
-    public void getAllSimulators() throws IOException, InterruptedException {
+    public void getAllSimulatorsTest() throws IOException, InterruptedException {
         deviceManager = new DeviceManager();
-        HashMap<Object, Object> allSimulators = deviceManager.getAllSimulators();
+        HashMap<Object, Object> allSimulators = deviceManager.getAllSimulators("iOS");
         assertTrue(allSimulators.size() > 0);
     }
 
@@ -23,7 +24,7 @@ public class SimulatorTest {
     public void getSimulatorUDID() throws Throwable {
         deviceManager = new DeviceManager();
         String simulatorUDID = deviceManager.getSimulatorUDID
-                ("iPhone 6s", "11.0");
+                ("iPhone 6s", "11.0", "iOS");
         assertTrue(simulatorUDID.length() == 36);
     }
 
@@ -32,7 +33,7 @@ public class SimulatorTest {
         deviceManager = new DeviceManager();
         try {
             deviceManager.getSimulatorUDID
-                    ("iPhone 6s", "9.99");
+                    ("iPhone 6s", "9.99" , "iOS");
         } catch (RuntimeException e) {
             assertEquals(e.getMessage(),"Incorrect OS version is provided -- 9.99");
         }
@@ -43,9 +44,17 @@ public class SimulatorTest {
         deviceManager = new DeviceManager();
         try {
             deviceManager.getSimulatorUDID
-                    ("iPhone 6ss", "11.0");
+                    ("iPhone 6ss", "11.0", "iOS");
         } catch (RuntimeException e) {
             assertEquals(e.getMessage(),"Incorrect DeviceName is provided -- iPhone 6ss");
         }
+    }
+
+    @Test
+    public void getSimulatorStateTest() throws Throwable {
+        deviceManager = new DeviceManager();
+        String simulatorState = deviceManager.getSimulatorState(
+                "iPhone 6s", "10.1", "iOS");
+        assertNotNull(simulatorState);
     }
 }

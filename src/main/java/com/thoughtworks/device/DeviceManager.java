@@ -1,17 +1,13 @@
 package com.thoughtworks.device;
 
-
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.thoughtworks.utils.CommandPromptUtil;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.Map;
 
-public class DeviceManager {
+public class DeviceManager implements Device {
 
     CommandPromptUtil commandPromptUtil;
     private HashMap<Object, Object> availableSimulators;
@@ -21,31 +17,25 @@ public class DeviceManager {
         availableSimulators = new HashMap<>();
     }
 
-    public HashMap<Object, Object> getAllSimulators()
+    public HashMap<Object, Object> getAllSimulators(String OSType)
             throws InterruptedException, IOException {
-        String fetchSimulators = commandPromptUtil.
-                runCommandThruProcess("xcrun simctl list -j devices");
-        ObjectMapper mapper = new ObjectMapper();
-        Map<String, Object> map;
-        map = mapper.readValue(fetchSimulators, new TypeReference<Map<String, Object>>() {
-        });
-        Object devices = map.get("devices");
+        Object devices = getAllAvailableSimulators();
         ((LinkedHashMap) devices).forEach((key, value) -> {
-            if (((String) key).split(" ")[0].equals("iOS")) {
-                availableSimulators.put(key, value);
+            if((OSType).equalsIgnoreCase(((String) key).split(" ")[0])) {
+                availableSimulators.put(key,value);
             }
         });
         return availableSimulators;
     }
 
-    public String getSimulatorUDID(String deviceName, String OS)
+    public String getSimulatorUDID(String deviceName, String OSVersion, String OSType)
             throws Throwable {
-        HashMap<Object, Object> allSimulators = getAllSimulators();
-        Object filerOS = allSimulators.entrySet().stream().filter(objectObjectEntry ->
-                objectObjectEntry.getKey().toString().contains(OS))
-                .findFirst().map(objectObjectEntry -> {
+        HashMap<Object, Object> allSimulators = getAllSimulators(OSType);
+        Object filerOS = allSimulators.entrySet().stream().filter(objectEntry ->
+                (OSVersion).contains(objectEntry.getKey().toString())).
+                findFirst().map(objectObjectEntry -> {
                     return objectObjectEntry.getValue();
-                }).orElseThrow(() -> new RuntimeException("Incorrect OS version is provided -- " + OS));
+                }).orElseThrow(() -> new RuntimeException("Incorrect OS version is provided -- " + OSVersion));
 
         Object getUDID = ((ArrayList) filerOS).stream().filter(o ->
                 ((LinkedHashMap) o).get("name").
@@ -54,5 +44,23 @@ public class DeviceManager {
         }).orElseThrow(() -> new RuntimeException("Incorrect DeviceName is provided -- " + deviceName));
         return (String) getUDID;
     }
+
+    public String getSimulatorState(String simName,String OSVersion, String OSType)
+            throws Throwable {
+        HashMap<Object, Object> allSimulators = getAllSimulators(OSType);
+        Object filerOS = allSimulators.entrySet().stream().filter(objectObjectEntry ->
+                objectObjectEntry.getKey().toString().contains(OSVersion))
+                .findFirst().map(objectObjectEntry -> {
+                    return objectObjectEntry.getValue();
+                }).orElseThrow(() -> new RuntimeException("Incorrect OS version is provided -- " + OSVersion));
+
+        Object getState = ((ArrayList) filerOS).stream().filter(o ->
+                ((LinkedHashMap) o).get("name").
+                        equals(simName)).findFirst().map(o -> {
+            return ((LinkedHashMap) o).get("state");
+        }).orElseThrow(() -> new RuntimeException("Incorrect DeviceName is provided -- " + simName));
+        return (String) getState;
+    }
+
 
 }
