@@ -32,7 +32,7 @@ public class DeviceManager implements Device {
             throws Throwable {
         HashMap<Object, Object> allSimulators = getAllSimulators(OSType);
         Object filerOS = allSimulators.entrySet().stream().filter(objectEntry ->
-                (OSVersion).contains(objectEntry.getKey().toString())).
+                (objectEntry.getKey().toString()).contains(OSVersion)).
                 findFirst().map(objectObjectEntry -> {
                     return objectObjectEntry.getValue();
                 }).orElseThrow(() -> new RuntimeException("Incorrect OS version is provided -- " + OSVersion));
@@ -62,5 +62,12 @@ public class DeviceManager implements Device {
         return (String) getState;
     }
 
+    public void bootSimulator(String deviceName, String OSVersion, String OSType )
+            throws Throwable {
+        String simulatorUDID = getSimulatorUDID(deviceName, OSVersion, OSType);
+        commandPromptUtil.runCommandThruProcess("xcrun simctl boot " + simulatorUDID);
+        commandPromptUtil.runCommandThruProcess("open -a Simulator --args -CurrentDeviceUDID "
+                + simulatorUDID );
+    }
 
 }
