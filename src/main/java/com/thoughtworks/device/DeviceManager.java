@@ -62,12 +62,31 @@ public class DeviceManager implements Device {
         return (String) getState;
     }
 
-    public void bootSimulator(String deviceName, String OSVersion, String OSType )
+    public void bootSimulator(String deviceName, String OSVersion, String OSType)
             throws Throwable {
         String simulatorUDID = getSimulatorUDID(deviceName, OSVersion, OSType);
         commandPromptUtil.runCommandThruProcess("xcrun simctl boot " + simulatorUDID);
         commandPromptUtil.runCommandThruProcess("open -a Simulator --args -CurrentDeviceUDID "
                 + simulatorUDID );
     }
+
+    public void installAppOnSimulator(String deviceName, String OSVersion,
+                                      String OSType,String appPath) throws Throwable {
+        String simulatorUDID = getSimulatorUDID(deviceName, OSVersion, OSType);
+        System.out.println("xcrun simctl install " + simulatorUDID
+                + " " + appPath);
+        commandPromptUtil.runCommandThruProcess("xcrun simctl install " + simulatorUDID
+        + appPath);
+        Runtime.getRuntime().exec("xcrun simctl install " + simulatorUDID
+                + appPath);
+    }
+
+    public void uninstallAppFromSimulator(String deviceName, String OSVersion,
+                                      String OSType,String appPath) throws Throwable {
+        String simulatorUDID = getSimulatorUDID(deviceName, OSVersion, OSType);
+        commandPromptUtil.runCommandThruProcess("xcrun simctl uninstall " + simulatorUDID
+                + appPath);
+    }
+
 
 }

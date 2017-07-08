@@ -67,4 +67,11 @@ public class SimulatorTest {
                 "8.4", "iOS");
         assertEquals(deviceState,"Booted");
     }
+
+    @Test
+    public void installApp() throws Throwable {
+        deviceManager = new DeviceManager();
+        deviceManager.installAppOnSimulator("iPhone SE", "11.0", "iOS"
+        ,"/Users/saikrisv/git/iOSDeviceManager/VodQAReactNative.app");
+    }
 }
