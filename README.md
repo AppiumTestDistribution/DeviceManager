@@ -28,3 +28,5 @@ Add following dependency to your pom.xml
 * getSimulatorUDID - Returns UDID of simulator needed.
 * getSimulatorState - Returns state of Simulator e.g `booted`, `shutdown`, etc
 * bootSimulator - Will boot the specified Simulator
+* install - Will install the application on Simulator
+* uninstall - Will remove the application from Simulator
