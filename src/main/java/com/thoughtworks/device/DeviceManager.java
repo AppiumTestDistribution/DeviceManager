@@ -2,7 +2,9 @@ package com.thoughtworks.device;
 
 import com.thoughtworks.utils.CommandPromptUtil;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -73,19 +75,17 @@ public class DeviceManager implements Device {
     public void installAppOnSimulator(String deviceName, String OSVersion,
                                       String OSType,String appPath) throws Throwable {
         String simulatorUDID = getSimulatorUDID(deviceName, OSVersion, OSType);
-        System.out.println("xcrun simctl install " + simulatorUDID
-                + " " + appPath);
-        commandPromptUtil.runCommandThruProcess("xcrun simctl install " + simulatorUDID
-        + appPath);
-        Runtime.getRuntime().exec("xcrun simctl install " + simulatorUDID
-                + appPath);
+        String execute = "xcrun simctl install " + simulatorUDID
+                + " " + appPath;
+        commandPromptUtil.execForProcessToExecute(execute);
     }
 
     public void uninstallAppFromSimulator(String deviceName, String OSVersion,
-                                      String OSType,String appPath) throws Throwable {
+                                      String OSType,String bundleID) throws Throwable {
         String simulatorUDID = getSimulatorUDID(deviceName, OSVersion, OSType);
-        commandPromptUtil.runCommandThruProcess("xcrun simctl uninstall " + simulatorUDID
-                + appPath);
+        String execute = "xcrun simctl uninstall " + simulatorUDID
+                + " " + bundleID ;
+        commandPromptUtil.execForProcessToExecute(execute);
     }
 
 
