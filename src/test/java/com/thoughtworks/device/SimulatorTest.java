@@ -67,4 +67,18 @@ public class SimulatorTest {
                 "8.4", "iOS");
         assertEquals(deviceState,"Booted");
     }
+
+    @Test
+    public void installApp() throws Throwable {
+        deviceManager = new DeviceManager();
+        deviceManager.installAppOnSimulator("My-iphone7", "11.0", "iOS"
+        ,System.getProperty("user.dir") + "/VodQAReactNative.app");
+    }
+
+    @Test
+    public void uninstallApp() throws Throwable {
+        deviceManager = new DeviceManager();
+        deviceManager.uninstallAppFromSimulator("My-iphone7", "11.0", "iOS"
+                ,"com.hariharanweb");
+    }
 }
