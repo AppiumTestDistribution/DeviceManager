@@ -79,6 +79,19 @@ public class SimulatorTest {
     public void uninstallApp() throws Throwable {
         deviceManager = new DeviceManager();
         deviceManager.uninstallAppFromSimulator("My-iphone7", "11.0", "iOS"
-                ,"com.hariharanweb");
+                , "com.hariharanweb");
+    }
+
+    @Test
+    public void createSimulatorTest() throws Throwable {
+        deviceManager = new DeviceManager();
+        deviceManager.createSimulator("srini", "10.1", "iPhone 6", "iOS");
+        assertNotNull(deviceManager.getSimulatorState("srini", "10.1", "iOS"));
+    }
+
+    @Test
+    public void deleteSimulatorTest() throws Throwable {
+        deviceManager = new DeviceManager();
+        deviceManager.deleteSimulator("srini", "10.1", "iOS");
     }
 }
