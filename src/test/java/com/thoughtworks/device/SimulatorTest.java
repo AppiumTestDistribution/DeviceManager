@@ -3,7 +3,7 @@ package com.thoughtworks.device;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -11,87 +11,90 @@ import static org.junit.Assert.assertTrue;
 
 public class SimulatorTest {
 
-    DeviceManager deviceManager;
+    SimulatorManager simulatorManager;
 
     @Test
     public void getAllSimulatorsTest() throws IOException, InterruptedException {
-        deviceManager = new DeviceManager();
-        HashMap<Object, Object> allSimulators = deviceManager.getAllSimulators("iOS");
+        simulatorManager = new SimulatorManager();
+        List<Device> allSimulators = simulatorManager.getAllSimulators("iOS");
         assertTrue(allSimulators.size() > 0);
     }
 
     @Test
     public void getSimulatorUDID() throws Throwable {
-        deviceManager = new DeviceManager();
-        String simulatorUDID = deviceManager.getSimulatorUDID
+        simulatorManager = new SimulatorManager();
+        String simulatorUDID = simulatorManager.getSimulatorUDID
                 ("iPhone 6s", "11.0", "iOS");
         assertTrue(simulatorUDID.length() == 36);
     }
 
     @Test
     public void throwExceptionWhenInvalidOSVersionIsGiven() throws Throwable {
-        deviceManager = new DeviceManager();
+        simulatorManager = new SimulatorManager();
         try {
-            deviceManager.getSimulatorUDID
+            simulatorManager.getSimulatorUDID
                     ("iPhone 6s", "9.99" , "iOS");
         } catch (RuntimeException e) {
-            assertEquals(e.getMessage(),"Incorrect OS version is provided -- 9.99");
+            assertEquals(e.getMessage(),"Device Not found with deviceName-iPhone 6s osVersion-9.99 osType-iOS");
         }
     }
 
     @Test
     public void throwExceptionWhenInvalidDeviceNameVersionIsGiven() throws Throwable {
-        deviceManager = new DeviceManager();
+        simulatorManager = new SimulatorManager();
         try {
-            deviceManager.getSimulatorUDID
+            simulatorManager.getSimulatorUDID
                     ("iPhone 6ss", "11.0", "iOS");
         } catch (RuntimeException e) {
-            assertEquals(e.getMessage(),"Incorrect DeviceName is provided -- iPhone 6ss");
+            assertEquals(e.getMessage(),"Device Not found with deviceName-iPhone 6ss osVersion-11.0 osType-iOS");
         }
     }
 
     @Test
     public void getSimulatorStateTest() throws Throwable {
-        deviceManager = new DeviceManager();
-        String simulatorState = deviceManager.getSimulatorState(
-                "iPhone 6s", "10.1", "iOS");
+        simulatorManager = new SimulatorManager();
+        String simulatorState = simulatorManager.getSimulatorState(
+                "iPhone 6s", "11.0", "iOS");
         assertNotNull(simulatorState);
     }
 
     @Test
     public void bootSimulatorAndCheckStatus() throws Throwable {
-        deviceManager = new DeviceManager();
-        deviceManager.bootSimulator(
-                "iPhone 6", "8.4", "iOS");
-        String deviceState = deviceManager.getSimulatorState("iPhone 6",
-                "8.4", "iOS");
+        simulatorManager = new SimulatorManager();
+        simulatorManager.bootSimulator(
+                "iPhone 6", "11.0", "iOS");
+        String deviceState = simulatorManager.getSimulatorState("iPhone 6",
+                "11.0", "iOS");
         assertEquals(deviceState,"Booted");
     }
 
     @Test
     public void installApp() throws Throwable {
-        deviceManager = new DeviceManager();
-        deviceManager.installAppOnSimulator("My-iphone7", "11.0", "iOS"
+        simulatorManager = new SimulatorManager();
+        simulatorManager.installAppOnSimulator("iPhone 6", "11.0", "iOS"
         ,System.getProperty("user.dir") + "/VodQAReactNative.app");
     }
 
     @Test
     public void uninstallApp() throws Throwable {
-        deviceManager = new DeviceManager();
-        deviceManager.uninstallAppFromSimulator("My-iphone7", "11.0", "iOS"
+        simulatorManager = new SimulatorManager();
+        simulatorManager.uninstallAppFromSimulator("iPhone 6", "11.0", "iOS"
                 , "com.hariharanweb");
     }
 
     @Test
-    public void createSimulatorTest() throws Throwable {
-        deviceManager = new DeviceManager();
-        deviceManager.createSimulator("srini", "10.1", "iPhone 6", "iOS");
-        assertNotNull(deviceManager.getSimulatorState("srini", "10.1", "iOS"));
-    }
+    public void createAndDeleteSimulatorTest() throws Throwable {
+        simulatorManager = new SimulatorManager();
+        long randomNumber = System.currentTimeMillis();
+        String deviceName = "srini" + randomNumber;
 
-    @Test
-    public void deleteSimulatorTest() throws Throwable {
-        deviceManager = new DeviceManager();
-        deviceManager.deleteSimulator("srini", "10.1", "iOS");
+        simulatorManager.createSimulator(deviceName, "iPhone 6", "11.0","iOS");
+        assertNotNull(simulatorManager.getSimulatorState(deviceName, "11.0", "iOS"));
+        simulatorManager.deleteSimulator(deviceName, "11.0", "iOS");
+        try {
+            simulatorManager.deleteSimulator(deviceName, "11.0", "iOS");
+        } catch (Exception e){
+            assertEquals("Device Not found with deviceName-" + deviceName + " osVersion-11.0 osType-iOS", e.getMessage());
+        }
     }
 }

@@ -1,49 +1,25 @@
 package com.thoughtworks.device;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.thoughtworks.utils.CommandPromptUtil;
-
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 public interface IDeviceManager {
 
-    /**
-     * Gets all available Simulators
-     *
-     */
-    default Object getAllAvailableSimulators() throws IOException, InterruptedException {
-        CommandPromptUtil commandPromptUtil = new CommandPromptUtil();
-        String fetchSimulators = commandPromptUtil.runCommandThruProcess("xcrun simctl list -j devices");
-        ObjectMapper mapper = new ObjectMapper();
-        Map<String, Object> map = mapper.readValue(fetchSimulators, new TypeReference<Map<String, Object>>() {});
-        return map.get("devices");
-    }
+    String getSimulatorState(String deviceName, String osVersion, String osType) throws Throwable;
 
-    /**
-     * Gets all available DeviceTypes
-     *
-     */
-    default ArrayList<HashMap<Object, Object>> getAllDeviceTypes() throws IOException, InterruptedException {
-        CommandPromptUtil commandPromptUtil = new CommandPromptUtil();
-        String fetchDeviceTypes = commandPromptUtil.runCommandThruProcess("xcrun simctl list -j devicetypes");
-        ObjectMapper mapper = new ObjectMapper();
-        Map<String, Object> map = mapper.readValue(fetchDeviceTypes, new TypeReference<Map<String, Object>>() {});
-        return (ArrayList<HashMap<Object, Object>>) map.get("devicetypes");
-    }
+    Device getDevice(String deviceName, String osVersion, String osType) throws InterruptedException, IOException;
 
-    /**
-     * Gets all available Runtimes
-     *
-     */
-    default ArrayList<HashMap<Object, Object>> getAllRuntimes() throws IOException, InterruptedException {
-        CommandPromptUtil commandPromptUtil = new CommandPromptUtil();
-        String fetchDeviceTypes = commandPromptUtil.runCommandThruProcess("xcrun simctl list -j runtimes");
-        ObjectMapper mapper = new ObjectMapper();
-        Map<String, Object> map = mapper.readValue(fetchDeviceTypes, new TypeReference<Map<String, Object>>() {});
-        return (ArrayList<HashMap<Object, Object>>) map.get("runtimes");
-    }
+    String getSimulatorUDID(String deviceName, String osVersion, String osType) throws Throwable;
+
+    List<Device> getAllSimulators(String osType) throws InterruptedException, IOException;
+
+    void deleteSimulator(String deviceName, String osVersion, String osType) throws Throwable;
+
+    void createSimulator(String simName, String deviceName, String osVersion, String osType) throws Throwable;
+
+    void uninstallAppFromSimulator(String deviceName, String osVersion, String osType, String bundleID) throws Throwable;
+
+    void installAppOnSimulator(String deviceName, String osVersion, String osType, String appPath) throws Throwable;
+
+    void bootSimulator(String deviceName, String osVersion, String osType) throws Throwable;
 }
