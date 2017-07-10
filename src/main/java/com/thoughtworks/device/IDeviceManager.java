@@ -22,4 +22,6 @@ public interface IDeviceManager {
     void installAppOnSimulator(String deviceName, String osVersion, String osType, String appPath) throws Throwable;
 
     void bootSimulator(String deviceName, String osVersion, String osType) throws Throwable;
+
+    Device getSimulatorDetailsFromUDID(String UDID, String osType) throws IOException, InterruptedException;
 }

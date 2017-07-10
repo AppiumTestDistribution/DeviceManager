@@ -97,4 +97,13 @@ public class SimulatorTest {
             assertEquals("Device Not found with deviceName-" + deviceName + " osVersion-11.0 osType-iOS", e.getMessage());
         }
     }
+
+    @Test
+    public void getDeviceDetails() throws Throwable {
+        simulatorManager = new SimulatorManager();
+        String iOSUDID = simulatorManager.getSimulatorUDID
+                ("iPhone 6s", "11.0", "iOS");
+        Device deviceDetails = simulatorManager.getSimulatorDetailsFromUDID(iOSUDID, "iOS");
+        assertEquals(deviceDetails.getName(),"iPhone 6s");
+    }
 }
