@@ -2,14 +2,12 @@ package com.thoughtworks.device;
 
 import com.thoughtworks.utils.CommandPromptUtil;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
-public class DeviceManager implements Device {
+public class DeviceManager implements IDeviceManager {
 
     CommandPromptUtil commandPromptUtil;
     private HashMap<Object, Object> availableSimulators;

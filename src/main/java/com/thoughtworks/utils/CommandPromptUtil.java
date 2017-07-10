@@ -38,7 +38,7 @@ public class CommandPromptUtil {
             Runtime rt = Runtime.getRuntime();
             Process pr = rt.exec(cmd);
             BufferedReader input = new BufferedReader(new InputStreamReader(pr.getInputStream()));
-            String line=null;
+            String line;
             while((line=input.readLine()) != null) {
                 System.out.println(line);
             }
