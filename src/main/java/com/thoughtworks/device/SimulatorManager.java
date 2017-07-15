@@ -61,11 +61,10 @@ public class SimulatorManager implements IDeviceManager {
     }
 
     @Override
-    public Device getSimulatorDetailsFromUDID(String UDID, String osType) throws IOException, InterruptedException {
-        List<Device> allSimulators = getAllSimulators(osType);
+    public Device getSimulatorDetailsFromUDID(String UDID) throws IOException, InterruptedException {
+        List<Device> allSimulators = getAllAvailableSimulators();
         Optional<Device> device = allSimulators.stream().filter(d ->
-                UDID.equals(d.getUdid()) &&
-                        osType.equals(d.getOs())).findFirst();
+                UDID.equals(d.getUdid())).findFirst();
         return device.orElseThrow(()->
                 new RuntimeException("Device Not found")
         );

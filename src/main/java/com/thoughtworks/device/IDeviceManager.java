@@ -23,5 +23,5 @@ public interface IDeviceManager {
 
     void bootSimulator(String deviceName, String osVersion, String osType) throws Throwable;
 
-    Device getSimulatorDetailsFromUDID(String UDID, String osType) throws IOException, InterruptedException;
+    Device getSimulatorDetailsFromUDID(String UDID) throws IOException, InterruptedException;
 }

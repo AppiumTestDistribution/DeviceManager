@@ -102,8 +102,8 @@ public class SimulatorTest {
     public void getDeviceDetails() throws Throwable {
         simulatorManager = new SimulatorManager();
         String iOSUDID = simulatorManager.getSimulatorUDID
-                ("iPhone 6s", "11.0", "iOS");
-        Device deviceDetails = simulatorManager.getSimulatorDetailsFromUDID(iOSUDID, "iOS");
+                ("iPhone 6s", "10.1", "iOS");
+        Device deviceDetails = simulatorManager.getSimulatorDetailsFromUDID(iOSUDID);
         assertEquals(deviceDetails.getName(),"iPhone 6s");
     }
 }
