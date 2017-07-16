@@ -2,6 +2,7 @@ package com.thoughtworks.device;
 
 import org.junit.Test;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -105,5 +106,18 @@ public class SimulatorTest {
                 ("iPhone 6s", "10.1", "iOS");
         Device deviceDetails = simulatorManager.getSimulatorDetailsFromUDID(iOSUDID);
         assertEquals(deviceDetails.getName(),"iPhone 6s");
+    }
+
+    @Test
+    public void captureScreenshot() throws Throwable {
+        simulatorManager = new SimulatorManager();
+        simulatorManager.bootSimulator(
+                "iPhone 6s", "11.0", "iOS");
+        String iOSUDID = simulatorManager.getSimulatorUDID
+                ("iPhone 6s", "11.0", "iOS");
+        simulatorManager.captureScreenshot(iOSUDID,"simulator",
+                System.getProperty("user.dir") + "/target/");
+        assertTrue(new File(System.getProperty("user.dir")
+                + "/target/simulator.jpeg").exists());
     }
 }
