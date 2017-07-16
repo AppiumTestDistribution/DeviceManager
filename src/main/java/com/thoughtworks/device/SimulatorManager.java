@@ -9,7 +9,7 @@ import java.util.*;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
-public class SimulatorManager implements IDeviceManager {
+public class SimulatorManager implements ISimulatorManager {
 
     private CommandPromptUtil commandPromptUtil;
 
@@ -54,11 +54,14 @@ public class SimulatorManager implements IDeviceManager {
     @Override
     public void bootSimulator(String deviceName, String osVersion, String osType)
             throws Throwable {
+        String ANSI_RED_BACKGROUND = "\u001B[41m";
         String simulatorUDID = getSimulatorUDID(deviceName, osVersion, osType);
         commandPromptUtil.runCommandThruProcess("xcrun simctl boot " + simulatorUDID);
+        System.out.println(ANSI_RED_BACKGROUND + "Waiting for Simulator to Boot Completely.....");
+        commandPromptUtil.runCommandThruProcess("xcrun simctl launch booted com.apple.springboard");
         commandPromptUtil.runCommandThruProcess("open -a Simulator --args -CurrentDeviceUDID "
                 + simulatorUDID);
-    }
+        }
 
     @Override
     public Device getSimulatorDetailsFromUDID(String UDID) throws IOException, InterruptedException {
@@ -68,6 +71,12 @@ public class SimulatorManager implements IDeviceManager {
         return device.orElseThrow(()->
                 new RuntimeException("Device Not found")
         );
+    }
+
+    @Override
+    public void captureScreenshot(String UDID, String fileName, String fileDestination) throws IOException, InterruptedException {
+        commandPromptUtil.runCommandThruProcess("xcrun simctl io " + UDID + " screenshot "
+                + fileDestination + "/" + fileName + ".jpeg");
     }
 
     @Override
