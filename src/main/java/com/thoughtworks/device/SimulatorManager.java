@@ -1,17 +1,23 @@
 package com.thoughtworks.device;
 
 import com.thoughtworks.utils.CommandPromptUtil;
+import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public class SimulatorManager implements ISimulatorManager {
 
+    final static Logger logger = Logger.getLogger(SimulatorManager.class);
     private CommandPromptUtil commandPromptUtil;
+    String ANSI_RED_BACKGROUND = "\u001B[41m";
 
     public SimulatorManager() {
         commandPromptUtil = new CommandPromptUtil();
@@ -54,7 +60,6 @@ public class SimulatorManager implements ISimulatorManager {
     @Override
     public void bootSimulator(String deviceName, String osVersion, String osType)
             throws Throwable {
-        String ANSI_RED_BACKGROUND = "\u001B[41m";
         String simulatorUDID = getSimulatorUDID(deviceName, osVersion, osType);
         commandPromptUtil.runCommandThruProcess("xcrun simctl boot " + simulatorUDID);
         logger.debug(ANSI_RED_BACKGROUND + "Waiting for Simulator to Boot Completely.....");
@@ -95,10 +100,10 @@ public class SimulatorManager implements ISimulatorManager {
         String bootedDeviceCountAfterShutDown = commandPromptUtil.
                 runCommandThruProcess("xcrun simctl list | grep Booted | wc -l");
         if (Integer.valueOf(bootedDeviceCountAfterShutDown.trim()) == 0 ) {
-            System.out.println("All Booted Simulators Shut...");
+            logger.debug(ANSI_RED_BACKGROUND + "All Booted Simulators Shut...");
             return true;
         } else {
-            System.out.println("Simulators that needs to be ShutDown are"
+            logger.debug(ANSI_RED_BACKGROUND + "Simulators that needs to be ShutDown are"
                     + commandPromptUtil.runCommand("xcrun simctl list | grep Booted"));
             return false;
         }
