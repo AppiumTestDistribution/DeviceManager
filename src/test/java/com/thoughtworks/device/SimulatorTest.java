@@ -120,4 +120,10 @@ public class SimulatorTest {
         assertTrue(new File(System.getProperty("user.dir")
                 + "/target/simulator.jpeg").exists());
     }
+
+    @Test
+    public void simulatorShutDown() throws IOException, InterruptedException {
+        simulatorManager = new SimulatorManager();
+        assertTrue(simulatorManager.shutDownAllBootedSimulators());
+    }
 }

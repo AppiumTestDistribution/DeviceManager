@@ -21,6 +21,17 @@ public class CommandPromptUtil {
         return allLine;
     }
 
+    public List<String> runCommand(String command)
+            throws InterruptedException, IOException {
+        BufferedReader br = getBufferedReader(command);
+        String line;
+        List<String> allLine = new ArrayList<>();
+        while ((line = br.readLine()) != null) {
+            allLine.add(line.replaceAll("[\\[\\](){}]","_").split("_")[1]);
+        }
+        return allLine;
+    }
+
     private BufferedReader getBufferedReader(String command) throws IOException {
         List<String> commands = new ArrayList<>();
         commands.add("/bin/sh");

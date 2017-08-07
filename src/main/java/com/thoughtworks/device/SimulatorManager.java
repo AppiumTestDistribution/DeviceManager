@@ -32,8 +32,8 @@ public class SimulatorManager implements ISimulatorManager {
                 deviceName.equals(d.getName()) &&
                         osVersion.equals(d.getOsVersion()) &&
                         osType.equals(d.getOs())).findFirst();
-        return device.orElseThrow(()->
-            new RuntimeException("Device Not found with deviceName-"+deviceName+ " osVersion-"+osVersion+" osType-"+osType)
+        return device.orElseThrow(() ->
+                new RuntimeException("Device Not found with deviceName-" + deviceName + " osVersion-" + osVersion + " osType-" + osType)
         );
     }
 
@@ -57,18 +57,18 @@ public class SimulatorManager implements ISimulatorManager {
         String ANSI_RED_BACKGROUND = "\u001B[41m";
         String simulatorUDID = getSimulatorUDID(deviceName, osVersion, osType);
         commandPromptUtil.runCommandThruProcess("xcrun simctl boot " + simulatorUDID);
-        System.out.println(ANSI_RED_BACKGROUND + "Waiting for Simulator to Boot Completely.....");
+        logger.debug(ANSI_RED_BACKGROUND + "Waiting for Simulator to Boot Completely.....");
         commandPromptUtil.runCommandThruProcess("xcrun simctl launch booted com.apple.springboard");
         commandPromptUtil.runCommandThruProcess("open -a Simulator --args -CurrentDeviceUDID "
                 + simulatorUDID);
-        }
+    }
 
     @Override
     public Device getSimulatorDetailsFromUDID(String UDID) throws IOException, InterruptedException {
         List<Device> allSimulators = getAllAvailableSimulators();
         Optional<Device> device = allSimulators.stream().filter(d ->
                 UDID.equals(d.getUdid())).findFirst();
-        return device.orElseThrow(()->
+        return device.orElseThrow(() ->
                 new RuntimeException("Device Not found")
         );
     }
@@ -77,6 +77,31 @@ public class SimulatorManager implements ISimulatorManager {
     public void captureScreenshot(String UDID, String fileName, String fileDestination) throws IOException, InterruptedException {
         commandPromptUtil.runCommandThruProcess("xcrun simctl io " + UDID + " screenshot "
                 + fileDestination + "/" + fileName + ".jpeg");
+    }
+
+    @Override
+    public boolean shutDownAllBootedSimulators() throws IOException, InterruptedException {
+        List<String> bootedDevices = commandPromptUtil.runCommand("xcrun simctl list | grep Booted");
+        bootedDevices
+                .forEach(bootedUDID -> {
+                    try {
+                        commandPromptUtil.runCommandThruProcess("xcrun simctl shutdown " + bootedUDID);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
+        String bootedDeviceCountAfterShutDown = commandPromptUtil.
+                runCommandThruProcess("xcrun simctl list | grep Booted | wc -l");
+        if (Integer.valueOf(bootedDeviceCountAfterShutDown.trim()) == 0 ) {
+            System.out.println("All Booted Simulators Shut...");
+            return true;
+        } else {
+            System.out.println("Simulators that needs to be ShutDown are"
+                    + commandPromptUtil.runCommand("xcrun simctl list | grep Booted"));
+            return false;
+        }
     }
 
     @Override
