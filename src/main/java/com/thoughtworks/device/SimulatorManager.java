@@ -1,17 +1,23 @@
 package com.thoughtworks.device;
 
 import com.thoughtworks.utils.CommandPromptUtil;
+import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
-public class SimulatorManager implements IDeviceManager {
+public class SimulatorManager implements ISimulatorManager {
 
+    final static Logger logger = Logger.getLogger(SimulatorManager.class);
     private CommandPromptUtil commandPromptUtil;
+    String ANSI_RED_BACKGROUND = "\u001B[41m";
 
     public SimulatorManager() {
         commandPromptUtil = new CommandPromptUtil();
@@ -32,8 +38,8 @@ public class SimulatorManager implements IDeviceManager {
                 deviceName.equals(d.getName()) &&
                         osVersion.equals(d.getOsVersion()) &&
                         osType.equals(d.getOs())).findFirst();
-        return device.orElseThrow(()->
-            new RuntimeException("Device Not found with deviceName-"+deviceName+ " osVersion-"+osVersion+" osType-"+osType)
+        return device.orElseThrow(() ->
+                new RuntimeException("Device Not found with deviceName-" + deviceName + " osVersion-" + osVersion + " osType-" + osType)
         );
     }
 
@@ -56,6 +62,8 @@ public class SimulatorManager implements IDeviceManager {
             throws Throwable {
         String simulatorUDID = getSimulatorUDID(deviceName, osVersion, osType);
         commandPromptUtil.runCommandThruProcess("xcrun simctl boot " + simulatorUDID);
+        logger.debug(ANSI_RED_BACKGROUND + "Waiting for Simulator to Boot Completely.....");
+        commandPromptUtil.runCommandThruProcess("xcrun simctl launch booted com.apple.springboard");
         commandPromptUtil.runCommandThruProcess("open -a Simulator --args -CurrentDeviceUDID "
                 + simulatorUDID);
     }
@@ -65,9 +73,45 @@ public class SimulatorManager implements IDeviceManager {
         List<Device> allSimulators = getAllAvailableSimulators();
         Optional<Device> device = allSimulators.stream().filter(d ->
                 UDID.equals(d.getUdid())).findFirst();
-        return device.orElseThrow(()->
+        return device.orElseThrow(() ->
                 new RuntimeException("Device Not found")
         );
+    }
+
+    @Override
+    public void captureScreenshot(String UDID, String fileName, String fileDestination) throws IOException, InterruptedException {
+        String xcodeVersion = commandPromptUtil.runCommandThruProcess("xcodebuild -version").split("(\\n)|(Xcode)")[1].trim();
+        if (Float.valueOf(xcodeVersion) < 8.2 ) {
+            new RuntimeException("Screenshot capture is only supported with xcode version 8.2 and above");
+        } else {
+            commandPromptUtil.runCommandThruProcess("xcrun simctl io " + UDID + " screenshot "
+                    + fileDestination + "/" + fileName + ".jpeg");
+        }
+    }
+
+    @Override
+    public boolean shutDownAllBootedSimulators() throws IOException, InterruptedException {
+        List<String> bootedDevices = commandPromptUtil.runCommand("xcrun simctl list | grep Booted");
+        bootedDevices
+                .forEach(bootedUDID -> {
+                    try {
+                        commandPromptUtil.runCommandThruProcess("xcrun simctl shutdown " + bootedUDID);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
+        String bootedDeviceCountAfterShutDown = commandPromptUtil.
+                runCommandThruProcess("xcrun simctl list | grep Booted | wc -l");
+        if (Integer.valueOf(bootedDeviceCountAfterShutDown.trim()) == 0 ) {
+            logger.debug(ANSI_RED_BACKGROUND + "All Booted Simulators Shut...");
+            return true;
+        } else {
+            logger.debug(ANSI_RED_BACKGROUND + "Simulators that needs to be ShutDown are"
+                    + commandPromptUtil.runCommand("xcrun simctl list | grep Booted"));
+            return false;
+        }
     }
 
     @Override

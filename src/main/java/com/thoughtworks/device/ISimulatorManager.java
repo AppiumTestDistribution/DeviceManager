@@ -3,7 +3,7 @@ package com.thoughtworks.device;
 import java.io.IOException;
 import java.util.List;
 
-public interface IDeviceManager {
+public interface ISimulatorManager {
 
     String getSimulatorState(String deviceName, String osVersion, String osType) throws Throwable;
 
@@ -24,4 +24,10 @@ public interface IDeviceManager {
     void bootSimulator(String deviceName, String osVersion, String osType) throws Throwable;
 
     Device getSimulatorDetailsFromUDID(String UDID) throws IOException, InterruptedException;
+
+    void captureScreenshot(String UDID, String fileName,String fileDestination) throws IOException, InterruptedException;
+
+    boolean shutDownAllBootedSimulators() throws IOException, InterruptedException;
+
+
 }
