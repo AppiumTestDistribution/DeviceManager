@@ -30,3 +30,6 @@ Add following dependency to your pom.xml
 * bootSimulator - Will boot the specified Simulator
 * install - Will install the application on Simulator
 * uninstall - Will remove the application from Simulator
+* getSimulatorDetailsFromUDID - Retrives simulator details for given UDID
+* captureScreenshot - Captures screenshot for given UDID.
+* shutDownAllBootedSimulators - Shutdown all booted simulators
