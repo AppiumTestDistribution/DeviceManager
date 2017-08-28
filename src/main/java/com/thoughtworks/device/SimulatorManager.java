@@ -115,6 +115,14 @@ public class SimulatorManager implements ISimulatorManager {
     }
 
     @Override
+    public List<Device> getAllBootedSimulators(String osType) throws InterruptedException, IOException {
+        List<Device> allSimulators = getAllSimulators(osType);
+        List<Device> bootedSim = allSimulators.stream().filter( device ->
+                device.getState().equalsIgnoreCase("Booted")).collect(Collectors.toList());
+        return bootedSim;
+    }
+
+    @Override
     public void installAppOnSimulator(String deviceName, String osVersion,
                                       String osType, String appPath) throws Throwable {
         String simulatorUDID = getSimulatorUDID(deviceName, osVersion, osType);

@@ -33,3 +33,4 @@ Add following dependency to your pom.xml
 * getSimulatorDetailsFromUDID - Retrives simulator details for given UDID
 * captureScreenshot - Captures screenshot for given UDID.
 * shutDownAllBootedSimulators - Shutdown all booted simulators
+* getAllBootedSimulators - Retrives all booted simulators

@@ -126,4 +126,10 @@ public class SimulatorTest {
         simulatorManager = new SimulatorManager();
         assertTrue(simulatorManager.shutDownAllBootedSimulators());
     }
+
+    @Test
+    public void getAllBootedSimulatorsTest() throws IOException, InterruptedException {
+        simulatorManager = new SimulatorManager();
+        assertEquals(simulatorManager.getAllBootedSimulators("iOS").get(0).getState(), "Booted");
+    }
 }

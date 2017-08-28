@@ -29,5 +29,5 @@ public interface ISimulatorManager {
 
     boolean shutDownAllBootedSimulators() throws IOException, InterruptedException;
 
-
+    List<Device> getAllBootedSimulators(String osType) throws InterruptedException, IOException;
 }
