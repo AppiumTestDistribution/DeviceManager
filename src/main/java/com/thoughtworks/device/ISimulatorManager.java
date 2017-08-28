@@ -25,7 +25,7 @@ public interface ISimulatorManager {
 
     Device getSimulatorDetailsFromUDID(String UDID) throws IOException, InterruptedException;
 
-    void captureScreenshot(String UDID, String fileName,String fileDestination) throws IOException, InterruptedException;
+    void captureScreenshot(String UDID, String fileName,String fileDestination, String format) throws IOException, InterruptedException;
 
     boolean shutDownAllBootedSimulators() throws IOException, InterruptedException;
 

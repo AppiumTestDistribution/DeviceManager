@@ -112,11 +112,11 @@ public class SimulatorTest {
     public void captureScreenshot() throws Throwable {
         simulatorManager = new SimulatorManager();
         simulatorManager.bootSimulator(
-                "iPhone 6s", "11.0", "iOS");
+                "iPhone 6", "11.0", "iOS");
         String iOSUDID = simulatorManager.getSimulatorUDID
-                ("iPhone 6s", "11.0", "iOS");
+                ("iPhone 6", "11.0", "iOS");
         simulatorManager.captureScreenshot(iOSUDID,"simulator",
-                System.getProperty("user.dir") + "/target/");
+                System.getProperty("user.dir") + "/target/", "jpeg");
         assertTrue(new File(System.getProperty("user.dir")
                 + "/target/simulator.jpeg").exists());
     }

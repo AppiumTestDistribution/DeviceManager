@@ -79,13 +79,13 @@ public class SimulatorManager implements ISimulatorManager {
     }
 
     @Override
-    public void captureScreenshot(String UDID, String fileName, String fileDestination) throws IOException, InterruptedException {
+    public void captureScreenshot(String UDID, String fileName, String fileDestination, String format) throws IOException, InterruptedException {
         String xcodeVersion = commandPromptUtil.runCommandThruProcess("xcodebuild -version").split("(\\n)|(Xcode)")[1].trim();
         if (Float.valueOf(xcodeVersion) < 8.2 ) {
             new RuntimeException("Screenshot capture is only supported with xcode version 8.2 and above");
         } else {
             commandPromptUtil.runCommandThruProcess("xcrun simctl io " + UDID + " screenshot "
-                    + fileDestination + "/" + fileName + ".jpeg");
+                    + fileDestination + "/" + fileName + "." + format);
         }
     }
 
