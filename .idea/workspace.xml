@@ -3,11 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="c6154e99-28ac-4c32-b2b9-e227d2b82c69" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/iOSDeviceManager.iml" afterPath="$PROJECT_DIR$/iOSDeviceManager.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/thoughtworks/device/ISimulatorManager.java" afterPath="$PROJECT_DIR$/src/main/java/com/thoughtworks/device/ISimulatorManager.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/thoughtworks/device/SimulatorManager.java" afterPath="$PROJECT_DIR$/src/main/java/com/thoughtworks/device/SimulatorManager.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/com/thoughtworks/device/SimulatorTest.java" afterPath="$PROJECT_DIR$/src/test/java/com/thoughtworks/device/SimulatorTest.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -35,13 +31,13 @@
         <entry file="file://$PROJECT_DIR$/src/test/java/com/thoughtworks/device/SimulatorTest.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="483">
-              <caret line="131" column="28" lean-forward="true" selection-start-line="131" selection-start-column="27" selection-end-line="131" selection-end-column="30" />
+              <caret line="131" column="28" lean-forward="false" selection-start-line="131" selection-start-column="27" selection-end-line="131" selection-end-column="30" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
+      <file leaf-file-name="README.md" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
@@ -68,11 +64,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="false">
+      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-73">
-              <caret line="8" column="25" lean-forward="false" selection-start-line="8" selection-start-column="25" selection-end-line="8" selection-end-column="25" />
+            <state relative-caret-position="120">
+              <caret line="8" column="16" lean-forward="false" selection-start-line="8" selection-start-column="16" selection-end-line="8" selection-end-column="16" />
               <folding />
             </state>
           </provider>
@@ -115,6 +111,7 @@
         <option value="$PROJECT_DIR$/src/main/java/com/thoughtworks/device/SimulatorManager.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/thoughtworks/device/SimulatorTest.java" />
         <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/pom.xml" />
       </list>
     </option>
   </component>
@@ -947,7 +944,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="17113000" />
+    <option name="totallyTimeSpent" value="17165000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="800" extended-state="6" />
@@ -1282,14 +1279,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-73">
-          <caret line="8" column="25" lean-forward="false" selection-start-line="8" selection-start-column="25" selection-end-line="8" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/thoughtworks/device/ISimulatorManager.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="450">
@@ -1313,7 +1302,7 @@
     <entry file="file://$PROJECT_DIR$/src/test/java/com/thoughtworks/device/SimulatorTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="483">
-          <caret line="131" column="28" lean-forward="true" selection-start-line="131" selection-start-column="27" selection-end-line="131" selection-end-column="30" />
+          <caret line="131" column="28" lean-forward="false" selection-start-line="131" selection-start-column="27" selection-end-line="131" selection-end-column="30" />
           <folding />
         </state>
       </provider>
@@ -1326,6 +1315,14 @@
             <folding />
           </first_editor>
           <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="16" lean-forward="false" selection-start-line="8" selection-start-column="16" selection-end-line="8" selection-end-column="16" />
+          <folding />
         </state>
       </provider>
     </entry>
