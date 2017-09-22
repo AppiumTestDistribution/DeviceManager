@@ -30,4 +30,6 @@ public interface ISimulatorManager {
     boolean shutDownAllBootedSimulators() throws IOException, InterruptedException;
 
     List<Device> getAllBootedSimulators(String osType) throws InterruptedException, IOException;
+
+    void uploadMediaToSimulator(String deviceName, String osVersion, String osType, String filePath) throws Throwable;
 }
