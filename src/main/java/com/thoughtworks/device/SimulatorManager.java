@@ -123,6 +123,14 @@ public class SimulatorManager implements ISimulatorManager {
     }
 
     @Override
+    public void uploadMediaToSimulator(String deviceName, String osVersion, String osType, String filePath) throws Throwable {
+        String simulatorUDID = getSimulatorUDID(deviceName, osVersion, osType);
+        String execute = "xcrun simctl addmedia " + simulatorUDID
+                + " " + filePath;
+        commandPromptUtil.execForProcessToExecute(execute);
+    }
+
+    @Override
     public void installAppOnSimulator(String deviceName, String osVersion,
                                       String osType, String appPath) throws Throwable {
         String simulatorUDID = getSimulatorUDID(deviceName, osVersion, osType);

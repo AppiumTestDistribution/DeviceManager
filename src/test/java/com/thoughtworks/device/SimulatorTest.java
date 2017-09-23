@@ -132,4 +132,11 @@ public class SimulatorTest {
         simulatorManager = new SimulatorManager();
         assertEquals(simulatorManager.getAllBootedSimulators("iOS").get(0).getState(), "Booted");
     }
+
+    @Test
+    public void uploadMediaToSimulatorTest() throws Throwable {
+        simulatorManager = new SimulatorManager();
+        simulatorManager.uploadMediaToSimulator("iPhone 6", "11.0", "iOS",
+                "/Users/ssekar/Desktop/GC_BCPage.png");
+    }
 }
