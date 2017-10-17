@@ -1,4 +1,6 @@
-package com.thoughtworks.device;
+package com.thoughtworks.interfaces;
+
+import com.thoughtworks.device.Device;
 
 import java.io.IOException;
 import java.util.List;

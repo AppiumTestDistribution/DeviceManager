@@ -1,5 +1,6 @@
 package com.thoughtworks.device;
 
+import com.thoughtworks.interfaces.ISimulatorManager;
 import com.thoughtworks.utils.CommandPromptUtil;
 import org.apache.log4j.Logger;
 import org.json.JSONArray;
