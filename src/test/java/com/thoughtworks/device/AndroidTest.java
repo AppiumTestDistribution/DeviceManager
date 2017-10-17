@@ -14,6 +14,6 @@ public class AndroidTest {
         deviceManager = new AndroidManager();
         Device deviceProperties = deviceManager.getDeviceProperties("192.168.58.101:5555");
         System.out.println(deviceProperties.getIsDevice());
-
+        System.out.println(deviceProperties.getDeviceModel());
     }
 }

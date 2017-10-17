@@ -55,12 +55,16 @@ public class AndroidManager implements DeviceManager {
                 || deviceOrEmulator.contains("unknown")) {
             isDevice = false;
         }
+
+        String deviceModel = cmd.runCommandThruProcess("adb -s " + deviceID
+                + " shell getprop ro.product.model");
         adbDevices.put("name", deviceName);
         adbDevices.put("osVersion", osVersion);
         adbDevices.put("apiLevel", apiLevel);
         adbDevices.put("brand", brand);
         adbDevices.put("udid", deviceID);
         adbDevices.put("isDevice",isDevice);
+        adbDevices.put("deviceModel",deviceModel);
         return adbDevices;
     }
 
@@ -94,7 +98,8 @@ public class AndroidManager implements DeviceManager {
         Optional<Device> device = getDeviceProperties().stream().filter(d ->
                 udid.equals(d.getUdid())).findFirst();
         return device.orElseThrow(() ->
-                new RuntimeException("Device Not found with deviceName")
+                new RuntimeException("Provided DeviceUDID " + udid
+                        + " is not found on the machine")
         );
     }
 

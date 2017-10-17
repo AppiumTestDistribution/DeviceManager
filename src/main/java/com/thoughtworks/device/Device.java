@@ -14,6 +14,7 @@ public class Device {
     private String brand;
     private String apiLevel;
     private boolean isDevice;
+    private String deviceModel;
 
     public Device(JSONObject deviceJson, String deviceType) {
         this.udid = deviceJson.getString("udid");
@@ -36,6 +37,7 @@ public class Device {
         this.brand = deviceJson.getString("brand");
         this.apiLevel = deviceJson.getString("apiLevel");
         this.isDevice = deviceJson.getBoolean("isDevice");
+        this.deviceModel = deviceJson.getString("deviceModel");
     }
 
     public String getUdid() {
@@ -76,5 +78,9 @@ public class Device {
 
     public boolean getIsDevice() {
         return isDevice;
+    }
+
+    public String getDeviceModel() {
+        return deviceModel;
     }
 }
