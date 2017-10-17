@@ -50,6 +50,9 @@ public class AndroidManager implements DeviceManager {
         String deviceOrEmulator = cmd.runCommandThruProcess("adb -s " +
                 deviceID +
                 " shell getprop ro.product.manufacturer");
+        String getScreenResolution = cmd.runCommandThruProcess("adb -s " + deviceID
+                + " shell wm size").split(":")[1].replace("\n","");
+
         boolean isDevice = true;
         if(deviceOrEmulator.contains("Genymotion")
                 || deviceOrEmulator.contains("unknown")) {
@@ -65,6 +68,7 @@ public class AndroidManager implements DeviceManager {
         adbDevices.put("udid", deviceID);
         adbDevices.put("isDevice",isDevice);
         adbDevices.put("deviceModel",deviceModel);
+        adbDevices.put("screenSize",getScreenResolution);
         return adbDevices;
     }
 

@@ -15,6 +15,7 @@ public class Device {
     private String apiLevel;
     private boolean isDevice;
     private String deviceModel;
+    private String screenSize;
 
     public Device(JSONObject deviceJson, String deviceType) {
         this.udid = deviceJson.getString("udid");
@@ -38,6 +39,7 @@ public class Device {
         this.apiLevel = deviceJson.getString("apiLevel");
         this.isDevice = deviceJson.getBoolean("isDevice");
         this.deviceModel = deviceJson.getString("deviceModel");
+        this.screenSize = deviceJson.getString("screenSize");
     }
 
     public String getUdid() {
@@ -83,4 +85,9 @@ public class Device {
     public String getDeviceModel() {
         return deviceModel;
     }
+
+    public String getScreenSize() {
+        return screenSize;
+    }
+
 }
