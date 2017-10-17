@@ -6,11 +6,16 @@ public class Device {
 
     private final String udid;
     private final String name;
-    private final String state;
-    private final boolean isAvailable;
+    private String state;
+    private boolean isAvailable;
     private String osVersion;
     private String os;
     private String deviceType;
+    private String brand;
+    private String apiLevel;
+    private boolean isDevice;
+    private String deviceModel;
+    private String screenSize;
 
     public Device(JSONObject deviceJson, String deviceType) {
         this.udid = deviceJson.getString("udid");
@@ -23,6 +28,18 @@ public class Device {
             this.os = osAndVersion[0];
             this.osVersion = osAndVersion[1];
         }
+    }
+
+
+    public Device(JSONObject deviceJson) {
+        this.udid = deviceJson.getString("udid");
+        this.name = deviceJson.getString("name");
+        this.osVersion = deviceJson.getString("osVersion");
+        this.brand = deviceJson.getString("brand");
+        this.apiLevel = deviceJson.getString("apiLevel");
+        this.isDevice = deviceJson.getBoolean("isDevice");
+        this.deviceModel = deviceJson.getString("deviceModel");
+        this.screenSize = deviceJson.getString("screenSize");
     }
 
     public String getUdid() {
@@ -52,4 +69,25 @@ public class Device {
     public String getOs() {
         return os;
     }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public String getApiLevel() {
+        return apiLevel;
+    }
+
+    public boolean getIsDevice() {
+        return isDevice;
+    }
+
+    public String getDeviceModel() {
+        return deviceModel;
+    }
+
+    public String getScreenSize() {
+        return screenSize;
+    }
+
 }
