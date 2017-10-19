@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
 
 public class AndroidManager implements DeviceManager {
 
@@ -51,10 +53,10 @@ public class AndroidManager implements DeviceManager {
                 deviceID +
                 " shell getprop ro.product.manufacturer");
         String getScreenResolution = cmd.runCommandThruProcess("adb -s " + deviceID
-                + " shell wm size").split(":")[1].replace("\n","");
+                + " shell wm size").split(":")[1].replace("\n", "");
 
         boolean isDevice = true;
-        if(deviceOrEmulator.contains("Genymotion")
+        if (deviceOrEmulator.contains("Genymotion")
                 || deviceOrEmulator.contains("unknown")) {
             isDevice = false;
         }
@@ -66,16 +68,15 @@ public class AndroidManager implements DeviceManager {
         adbDevices.put("apiLevel", apiLevel);
         adbDevices.put("brand", brand);
         adbDevices.put("udid", deviceID);
-        adbDevices.put("isDevice",isDevice);
-        adbDevices.put("deviceModel",deviceModel);
-        adbDevices.put("screenSize",getScreenResolution);
+        adbDevices.put("isDevice", isDevice);
+        adbDevices.put("deviceModel", deviceModel);
+        adbDevices.put("screenSize", getScreenResolution);
         return adbDevices;
     }
 
 
     private List<Device> getDeviceProperties() throws Exception {
         List<Device> device = new ArrayList<>();
-        JSONObject adb = new JSONObject();
         startADB(); // start adb service
         String output = cmd.runCommandThruProcess("adb devices");
         String[] lines = output.split("\n");
@@ -107,5 +108,17 @@ public class AndroidManager implements DeviceManager {
         );
     }
 
-
+    public void installApp() throws Exception {
+        List<Device> deviceProperties = getDeviceProperties();
+        ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newCachedThreadPool();
+        for (int i = 0; i < deviceProperties.size(); i++) {
+            Device device = deviceProperties.get(i);
+            Task task = new Task("Installing on device " + device.getName() + "with UDID" + device.getUdid());
+            cmd.runCommandThruProcess(("adb -s " + device.getUdid()
+                    + " install /Users/saikrisv/git/BuyNowMobileTest/packages/BuyNowMobile-TocProduct.apk"));
+            executor.execute(task);
+        }
+        executor.shutdown();
+    }
 }
+
