@@ -115,7 +115,7 @@ public class AndroidManager implements DeviceManager {
             Device device = deviceProperties.get(i);
             Task task = new Task("Installing on device " + device.getName() + "with UDID" + device.getUdid());
             cmd.runCommandThruProcess(("adb -s " + device.getUdid()
-                    + " install /Users/saikrisv/git/BuyNowMobileTest/packages/BuyNowMobile-TocProduct.apk"));
+                    + " install /Users/saikrisv/git/"));
             executor.execute(task);
         }
         executor.shutdown();
