@@ -108,17 +108,24 @@ public class AndroidManager implements DeviceManager {
         );
     }
 
-    public void installApp() throws Exception {
+    @Override
+    public void installApp(String apkPath) throws Exception {
         List<Device> deviceProperties = getDeviceProperties();
         ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newCachedThreadPool();
         for (int i = 0; i < deviceProperties.size(); i++) {
             Device device = deviceProperties.get(i);
             Task task = new Task("Installing on device " + device.getName() + "with UDID" + device.getUdid());
             cmd.runCommandThruProcess(("adb -s " + device.getUdid()
-                    + " install /Users/saikrisv/git/"));
+                    + " install " + apkPath));
             executor.execute(task);
         }
         executor.shutdown();
+    }
+
+    @Override
+    public void installApp(String apkPath, String udid) throws IOException, InterruptedException {
+        cmd.runCommandThruProcess(("adb -s " + udid
+                + " install " + apkPath));
     }
 }
 
