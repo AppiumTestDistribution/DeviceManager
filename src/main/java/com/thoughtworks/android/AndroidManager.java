@@ -73,7 +73,7 @@ public class AndroidManager implements DeviceManager {
     }
 
 
-    private List<Device> getDeviceProperties() throws Exception {
+    public List<Device> getDeviceProperties() throws Exception {
         List<Device> device = new ArrayList<>();
         JSONObject adb = new JSONObject();
         startADB(); // start adb service
