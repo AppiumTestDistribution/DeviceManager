@@ -7,7 +7,12 @@
     <groupId>com.thoughtworks.iOSDeviceManager</groupId>
     <artifactId>iOSDeviceManager</artifactId>
     <version>1.2</version>
-
+    <repositories>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
     <dependencies>
         <dependency>
             <groupId>junit</groupId>

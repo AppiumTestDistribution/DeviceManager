@@ -61,4 +61,15 @@ public class CommandPromptUtil {
         }
     }
 
+    public String runProcessCommandToGetDeviceID(String command)
+            throws InterruptedException, IOException {
+        BufferedReader br = getBufferedReader(command);
+        String line;
+        String allLine = "";
+        while ((line = br.readLine()) != null) {
+            allLine = allLine.trim() + "" + line.trim() + "\n";
+        }
+        return allLine.trim();
+    }
+
 }

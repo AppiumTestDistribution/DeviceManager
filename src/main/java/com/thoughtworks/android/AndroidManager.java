@@ -1,7 +1,7 @@
 package com.thoughtworks.android;
 
 import com.thoughtworks.device.Device;
-import com.thoughtworks.interfaces.DeviceManager;
+import com.thoughtworks.interfaces.Manager;
 import com.thoughtworks.utils.CommandPromptUtil;
 import org.json.JSONObject;
 
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class AndroidManager implements DeviceManager {
+public class AndroidManager implements Manager {
 
     private CommandPromptUtil cmd;
     private JSONObject adbDevices;
