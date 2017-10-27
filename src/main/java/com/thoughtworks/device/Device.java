@@ -2,6 +2,9 @@ package com.thoughtworks.device;
 
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Device {
 
     private String udid;
@@ -18,6 +21,22 @@ public class Device {
     private String screenSize;
     private String deviceManufacturer;
 
+    private static Map<String, String> deviceIdentifier = new HashMap<>();
+
+    static {
+        deviceIdentifier.put("iPhone 5s", "iPhone6,1");
+        deviceIdentifier.put("iPhone 6", "iPhone7,2");
+        deviceIdentifier.put("iPhone 6 Plus", "iPhone7,1");
+        deviceIdentifier.put("iPhone 6s", "iPhone8,1");
+        deviceIdentifier.put("iPhone 6s Plus", "iPhone8,2");
+        deviceIdentifier.put("iPhone 7", "iPhone9,1");
+        deviceIdentifier.put("iPhone 7 Plus", "iPhone9,2");
+        deviceIdentifier.put("iPhone 8", "iPhone10,1");
+        deviceIdentifier.put("iPhone 8 Plus", "iPhone10,2");
+        deviceIdentifier.put("iPhone SE", "iPhone8,4");
+        deviceIdentifier.put("iPhone X", "iPhone10,3");
+    }
+
     public Device(JSONObject deviceJson, String deviceType) {
         this.udid = deviceJson.getString("udid");
         this.name = deviceJson.getString("name");
@@ -29,6 +48,7 @@ public class Device {
             this.os = osAndVersion[0];
             this.osVersion = osAndVersion[1];
         }
+        this.deviceModel = deviceIdentifier.getOrDefault(this.name, "Not Supported");
     }
 
 
