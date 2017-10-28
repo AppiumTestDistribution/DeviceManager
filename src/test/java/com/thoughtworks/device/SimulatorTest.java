@@ -152,6 +152,6 @@ public class SimulatorTest {
     public void getDevicePropertiesTest() throws Exception {
 //        List<Device> deviceProperties = new Manager().getDeviceProperties();
 //        System.out.println(deviceProperties.get(0).getName());
-        new IOSManager().getAllAvailableDevices();
+        new Manager().getDeviceProperties();
     }
 }
