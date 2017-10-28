@@ -36,36 +36,32 @@ public class IOSManager implements Manager {
         );
     }
 
-    public List<Device> getAllAvailableDevices(){
-
+    public List<Device> getAllAvailableDevices() {
         List<Device> device = new ArrayList<>();
-        ArrayList<String> iosudid = getIOSUDID();
-        for (int i = 0; i < iosudid.size(); i++) {
-            JSONObject deviceInfo = null;
+        getIOSUDID().forEach(udid -> {
             try {
-                deviceInfo = getDeviceInfo(iosudid.get(i));
+                device.add(new Device(getDeviceInfo(udid)));
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            device.add(new Device(deviceInfo));
-        }
+        });
         return device;
     }
 
-    private JSONObject getDeviceInfo(String iosDevices) throws InterruptedException, IOException {
+    private JSONObject getDeviceInfo(String udid) throws InterruptedException, IOException {
 
         String model = cmd.runProcessCommandToGetDeviceID("ideviceinfo -u "
-                + iosDevices + " | grep ProductVersion").replace("\n", "");
+                + udid + " | grep ProductVersion").replace("\n", "");
 
-        String name = cmd.runProcessCommandToGetDeviceID("idevicename --udid " + iosDevices);
+        String name = cmd.runProcessCommandToGetDeviceID("idevicename --udid " + udid);
         String osVersion = cmd.runProcessCommandToGetDeviceID("ideviceinfo --udid "
-                + iosDevices
+                + udid
                 + " | grep ProductVersion").replace("\n", "");
 
         iOSDevices.put("deviceModel",model);
-        iOSDevices.put("udid",iosDevices);
+        iOSDevices.put("udid",udid);
         iOSDevices.put("name",name);
         iOSDevices.put("brand","Apple");
         iOSDevices.put("isDevice","true");
