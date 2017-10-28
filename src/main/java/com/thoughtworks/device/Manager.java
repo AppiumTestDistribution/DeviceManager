@@ -4,8 +4,10 @@ package com.thoughtworks.device;
 import com.thoughtworks.android.AndroidManager;
 import com.thoughtworks.iOS.IOSManager;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 public class Manager implements com.thoughtworks.interfaces.Manager {
 
@@ -25,8 +27,11 @@ public class Manager implements com.thoughtworks.interfaces.Manager {
     }
 
     public List<Device> getDeviceProperties() throws Exception {
-        List<Device> allDevice = new AndroidManager().getDeviceProperties();
-        allDevice.addAll(new SimulatorManager().getAllBootedSimulators("iOS"));
+        List<Device> allDevice = new ArrayList<>();
+        List<Device> androidDevice = new AndroidManager().getDeviceProperties();
+        List<Device> iOSSimulators = new SimulatorManager().getAllBootedSimulators("iOS");
+        List<Device> iOSRealDevice = new IOSManager().getAllAvailableDevices();
+        Stream.of(androidDevice, iOSSimulators, iOSRealDevice).forEach(allDevice::addAll);
         return allDevice;
     }
 }
