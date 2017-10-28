@@ -6,6 +6,7 @@ import org.junit.Test;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -143,7 +144,7 @@ public class SimulatorTest {
 
     @Test
     public void getPropertiesTest() throws Exception {
-        Device deviceProperties = new Manager().getDeviceProperties("CB194DE8-97DF-4DAB-BA06-CC15274E0B40");
+        Device deviceProperties = new Manager().getDeviceProperties("157BFA56-AF97-4DFF-8B98-794EF4ED9E81");
         System.out.println(deviceProperties.getName());
     }
 
