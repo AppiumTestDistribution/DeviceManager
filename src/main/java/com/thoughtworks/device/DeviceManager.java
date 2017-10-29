@@ -3,13 +3,14 @@ package com.thoughtworks.device;
 
 import com.thoughtworks.android.AndroidManager;
 import com.thoughtworks.iOS.IOSManager;
+import com.thoughtworks.interfaces.Manager;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-public class Manager implements com.thoughtworks.interfaces.Manager {
+public class DeviceManager implements Manager {
 
     @Override
     public Device getDeviceProperties(String udid) throws Exception {

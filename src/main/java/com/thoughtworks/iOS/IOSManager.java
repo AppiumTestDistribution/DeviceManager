@@ -27,8 +27,7 @@ public class IOSManager implements Manager {
 
     @Override
     public Device getDeviceProperties(String udid) {
-        Optional<Device> device = null;
-            device = getAllAvailableDevices().stream().filter(d ->
+        Optional<Device> device = getAllAvailableDevices().stream().filter(d ->
                     udid.equals(d.getUdid())).findFirst();
         return device.orElseThrow(() ->
                 new RuntimeException("Provided DeviceUDID " + udid
