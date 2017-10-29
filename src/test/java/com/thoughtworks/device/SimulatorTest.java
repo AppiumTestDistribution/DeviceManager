@@ -1,10 +1,12 @@
 package com.thoughtworks.device;
 
+import com.thoughtworks.iOS.IOSManager;
 import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -138,5 +140,18 @@ public class SimulatorTest {
         simulatorManager = new SimulatorManager();
         simulatorManager.uploadMediaToSimulator("iPhone 6", "11.0", "iOS",
                 "/Users/ssekar/Desktop/GC_BCPage.png");
+    }
+
+    @Test
+    public void getPropertiesTest() throws Exception {
+        Device deviceProperties = new Manager().getDeviceProperties("157BFA56-AF97-4DFF-8B98-794EF4ED9E81");
+        System.out.println(deviceProperties.getName());
+    }
+
+    @Test
+    public void getDevicePropertiesTest() throws Exception {
+//        List<Device> deviceProperties = new Manager().getDeviceProperties();
+//        System.out.println(deviceProperties.get(0).getName());
+        new Manager().getDeviceProperties();
     }
 }

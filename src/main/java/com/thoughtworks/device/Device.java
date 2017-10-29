@@ -6,13 +6,13 @@ public class Device {
 
     private final String udid;
     private final String name;
-    private String state;
+    private String state = "Not Supported";
     private boolean isAvailable;
     private String osVersion;
-    private String os;
-    private String deviceType;
-    private String brand;
-    private String apiLevel;
+    private String os = "Not Supported";
+    private String deviceType = "Not Supported";
+    private String brand = "Not Supported";
+    private String apiLevel = "Not Supported";
     private boolean isDevice;
     private String deviceModel;
     private String screenSize;

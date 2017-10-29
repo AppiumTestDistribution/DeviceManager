@@ -70,8 +70,15 @@ public class SimulatorManager implements ISimulatorManager {
     }
 
     @Override
-    public Device getSimulatorDetailsFromUDID(String UDID) throws IOException, InterruptedException {
-        List<Device> allSimulators = getAllAvailableSimulators();
+    public Device getSimulatorDetailsFromUDID(String UDID){
+        List<Device> allSimulators = null;
+        try {
+            allSimulators = getAllAvailableSimulators();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         Optional<Device> device = allSimulators.stream().filter(d ->
                 UDID.equals(d.getUdid())).findFirst();
         return device.orElseThrow(() ->
@@ -173,7 +180,7 @@ public class SimulatorManager implements ISimulatorManager {
     /**
      * Gets all available Simulators
      */
-    private List<Device> getAllAvailableSimulators() throws IOException, InterruptedException {
+    public List<Device> getAllAvailableSimulators() throws IOException, InterruptedException {
         CommandPromptUtil commandPromptUtil = new CommandPromptUtil();
         String simulatorJsonString = commandPromptUtil.runCommandThruProcess("xcrun simctl list -j devices");
 
