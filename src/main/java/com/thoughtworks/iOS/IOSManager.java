@@ -75,16 +75,12 @@ public class IOSManager implements Manager {
         try {
             int startPos = 0;
             int endPos = IOS_UDID_LENGTH - 1;
-            String getIOSDeviceID = cmd.runProcessCommandToGetDeviceID(profile);
-            if (getIOSDeviceID == null || getIOSDeviceID.equalsIgnoreCase("") || getIOSDeviceID
-                    .isEmpty()) {
-            } else {
-                while (endPos < getIOSDeviceID.length()) {
-                    deviceUDIDiOS.add(getIOSDeviceID.substring(startPos, endPos + 1)
-                            .replace("\n", ""));
-                    startPos += IOS_UDID_LENGTH;
-                    endPos += IOS_UDID_LENGTH;
-                }
+            Optional<String> getIOSDeviceID = Optional.of(cmd.runProcessCommandToGetDeviceID(profile));
+            while (endPos < getIOSDeviceID.get().length()) {
+                deviceUDIDiOS.add(getIOSDeviceID.get().substring(startPos, endPos + 1)
+                        .replace("\n", ""));
+                startPos += IOS_UDID_LENGTH;
+                endPos += IOS_UDID_LENGTH;
             }
         } catch (InterruptedException | IOException e) {
             e.printStackTrace();
