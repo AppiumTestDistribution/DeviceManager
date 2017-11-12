@@ -33,9 +33,6 @@ public class DeviceManager implements Manager {
         List<Device> iOSSimulators = new SimulatorManager().getAllBootedSimulators("iOS");
         List<Device> iOSRealDevice = new IOSManager().getAllAvailableDevices();
         Stream.of(androidDevice, iOSSimulators, iOSRealDevice).forEach(allDevice::addAll);
-        if(allDevice.isEmpty()) {
-            throw new RuntimeException("No Device Connected ......");
-        }
         return allDevice;
     }
 }
