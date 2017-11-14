@@ -151,6 +151,14 @@ public class SimulatorManager implements ISimulatorManager {
     }
 
     @Override
+    public void startScreenRecording(String UDID,String pathWithFileName) throws IOException {
+        System.out.println("xcrun simctl io " + UDID + " recordVideo " + pathWithFileName);
+        screenRecordProcess = commandPromptUtil
+                .execForProcessToExecute("xcrun simctl io " + UDID + " recordVideo " + pathWithFileName);
+        System.out.println(screenRecordProcess);
+    }
+
+    @Override
     public void stopScreenRecording() throws IOException, InterruptedException {
         Integer processId = getPid(screenRecordProcess);
         String command = "kill -2 " + processId;

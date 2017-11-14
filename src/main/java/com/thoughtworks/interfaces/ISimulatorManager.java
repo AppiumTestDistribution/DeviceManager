@@ -38,4 +38,6 @@ public interface ISimulatorManager {
     void startScreenRecording(String pathWithFileName) throws IOException;
 
     void stopScreenRecording() throws IOException, InterruptedException;
+
+    void startScreenRecording(String UDID,String pathWithFileName) throws IOException;
 }
