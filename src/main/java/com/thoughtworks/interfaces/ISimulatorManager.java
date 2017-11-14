@@ -34,4 +34,8 @@ public interface ISimulatorManager {
     List<Device> getAllBootedSimulators(String osType) throws InterruptedException, IOException;
 
     void uploadMediaToSimulator(String deviceName, String osVersion, String osType, String filePath) throws Throwable;
+
+    void startScreenRecording(String pathWithFileName) throws IOException;
+
+    void stopScreenRecording() throws IOException, InterruptedException;
 }

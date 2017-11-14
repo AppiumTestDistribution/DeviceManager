@@ -2,7 +2,7 @@ package com.thoughtworks.device;
 
 import org.json.JSONObject;
 
-public class Runtime {
+public class IOSRuntime {
     private final String buildversion;
     private final boolean isAvailable;
     private final String name;
@@ -10,7 +10,7 @@ public class Runtime {
     private final String version;
     private final String os;
 
-    public Runtime(JSONObject runtimeJSON) {
+    public IOSRuntime(JSONObject runtimeJSON) {
         buildversion = runtimeJSON.getString("buildversion");
         name = runtimeJSON.getString("name");
         version = runtimeJSON.getString("version");

@@ -6,7 +6,10 @@ import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -19,6 +22,7 @@ public class SimulatorManager implements ISimulatorManager {
     final static Logger logger = Logger.getLogger(SimulatorManager.class);
     private CommandPromptUtil commandPromptUtil;
     String ANSI_RED_BACKGROUND = "\u001B[41m";
+    Process screenRecordProcess;
 
     public SimulatorManager() {
         commandPromptUtil = new CommandPromptUtil();
@@ -135,7 +139,23 @@ public class SimulatorManager implements ISimulatorManager {
         String simulatorUDID = getSimulatorUDID(deviceName, osVersion, osType);
         String execute = "xcrun simctl addmedia " + simulatorUDID
                 + " " + filePath;
-        commandPromptUtil.execForProcessToExecute(execute);
+        commandPromptUtil.execForProcessToExecute(execute).waitFor();
+    }
+
+    @Override
+    public void startScreenRecording(String pathWithFileName) throws IOException {
+        System.out.println("xcrun simctl io booted recordVideo " + pathWithFileName);
+        screenRecordProcess = commandPromptUtil
+                .execForProcessToExecute("xcrun simctl io booted recordVideo " + pathWithFileName);
+        System.out.println(screenRecordProcess);
+    }
+
+    @Override
+    public void stopScreenRecording() throws IOException, InterruptedException {
+        Integer processId = getPid(screenRecordProcess);
+        String command = "kill -2 " + processId;
+        System.out.println("Stopping Video Recording");
+        commandPromptUtil.execForProcessToExecute(command).waitFor();
     }
 
     @Override
@@ -144,7 +164,7 @@ public class SimulatorManager implements ISimulatorManager {
         String simulatorUDID = getSimulatorUDID(deviceName, osVersion, osType);
         String execute = "xcrun simctl install " + simulatorUDID
                 + " " + appPath;
-        commandPromptUtil.execForProcessToExecute(execute);
+        commandPromptUtil.execForProcessToExecute(execute).waitFor();
     }
 
     @Override
@@ -153,7 +173,7 @@ public class SimulatorManager implements ISimulatorManager {
         String simulatorUDID = getSimulatorUDID(deviceName, osVersion, osType);
         String execute = "xcrun simctl uninstall " + simulatorUDID
                 + " " + bundleID;
-        commandPromptUtil.execForProcessToExecute(execute);
+        commandPromptUtil.execForProcessToExecute(execute).waitFor();
     }
 
     @Override
@@ -161,13 +181,13 @@ public class SimulatorManager implements ISimulatorManager {
             throws Throwable {
         List<DeviceType> deviceTypes = getAllDeviceTypes();
         DeviceType deviceType = deviceTypes.stream().filter(d -> deviceName.equals(d.getName())).findFirst().get();
-        List<Runtime> deviceRuntimes = getAllRuntimes();
-        Runtime runtime = deviceRuntimes.stream().filter(r ->
+        List<IOSRuntime> deviceIOSRuntimes = getAllRuntimes();
+        IOSRuntime IOSRuntime = deviceIOSRuntimes.stream().filter(r ->
                 osType.equals(r.getOs()) && osVersion.equals(r.getVersion())
         ).findFirst().get();
 
         commandPromptUtil.runCommandThruProcess("xcrun simctl create " + simName + " " + deviceType.getIdentifier() + " " +
-                runtime.getIdentifier());
+                IOSRuntime.getIdentifier());
     }
 
     @Override
@@ -219,16 +239,29 @@ public class SimulatorManager implements ISimulatorManager {
     /**
      * Gets all available Runtimes
      */
-    private List<Runtime> getAllRuntimes() throws IOException, InterruptedException {
+    private List<IOSRuntime> getAllRuntimes() throws IOException, InterruptedException {
         CommandPromptUtil commandPromptUtil = new CommandPromptUtil();
-        String runtimesJSONString = commandPromptUtil.runCommandThruProcess("xcrun simctl list -j runtimes");
+        String runtimesJSONString = commandPromptUtil.runCommandThruProcess("xcrun simctl list -j IOSRuntimes");
 
-        JSONArray runtimesJSON = new JSONObject(runtimesJSONString).getJSONArray("runtimes");
-        List<Runtime> runtimes = new ArrayList<>();
+        JSONArray runtimesJSON = new JSONObject(runtimesJSONString).getJSONArray("IOSRuntimes");
+        List<IOSRuntime> IOSRuntimes = new ArrayList<>();
         runtimesJSON.forEach(runtime -> {
-            runtimes.add(new Runtime((JSONObject) runtime));
+            IOSRuntimes.add(new IOSRuntime((JSONObject) runtime));
         });
-        return runtimes;
+        return IOSRuntimes;
+    }
+
+    public int getPid(Process process) {
+        try {
+            Class<?> cProcessImpl = process.getClass();
+            Field fPid = cProcessImpl.getDeclaredField("pid");
+            if (!fPid.isAccessible()) {
+                fPid.setAccessible(true);
+            }
+            return fPid.getInt(process);
+        } catch (Exception e) {
+            return -1;
+        }
     }
 
     private static <T> Collector<T, ?, List<T>> toList() {

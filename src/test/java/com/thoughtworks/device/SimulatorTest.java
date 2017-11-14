@@ -1,5 +1,6 @@
 package com.thoughtworks.device;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.File;
@@ -151,5 +152,14 @@ public class SimulatorTest {
 //        List<Device> deviceProperties = new DeviceManager().getDeviceProperties();
 //        System.out.println(deviceProperties.get(0).getName());
         new DeviceManager().getDeviceProperties();
+    }
+
+    @Test
+    public void screenRecording() throws Exception {
+        SimulatorManager simulatorManager = new SimulatorManager();
+        simulatorManager.startScreenRecording("sample.mp4");
+        Thread.sleep(10000);
+        simulatorManager.stopScreenRecording();
+        Assert.assertTrue(new File(System.getProperty("user.dir") + "/sample.mp4").exists());
     }
 }
