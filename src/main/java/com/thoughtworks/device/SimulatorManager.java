@@ -249,9 +249,9 @@ public class SimulatorManager implements ISimulatorManager {
      */
     private List<IOSRuntime> getAllRuntimes() throws IOException, InterruptedException {
         CommandPromptUtil commandPromptUtil = new CommandPromptUtil();
-        String runtimesJSONString = commandPromptUtil.runCommandThruProcess("xcrun simctl list -j IOSRuntimes");
+        String runtimesJSONString = commandPromptUtil.runCommandThruProcess("xcrun simctl list -j runtimes");
 
-        JSONArray runtimesJSON = new JSONObject(runtimesJSONString).getJSONArray("IOSRuntimes");
+        JSONArray runtimesJSON = new JSONObject(runtimesJSONString).getJSONArray("runtimes");
         List<IOSRuntime> IOSRuntimes = new ArrayList<>();
         runtimesJSON.forEach(runtime -> {
             IOSRuntimes.add(new IOSRuntime((JSONObject) runtime));
