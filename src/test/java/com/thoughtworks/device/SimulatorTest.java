@@ -157,7 +157,7 @@ public class SimulatorTest {
     @Test
     public void screenRecording() throws Exception {
         SimulatorManager simulatorManager = new SimulatorManager();
-        simulatorManager.startScreenRecording("157BFA56-AF97-4DFF-8B98-794EF4ED9E81","sample.mp4");
+        simulatorManager.startScreenRecording("D97F6677-C9CE-45C5-87A1-B7C4B77C1D25","sample.mp4");
         Thread.sleep(10000);
         simulatorManager.stopScreenRecording();
         Assert.assertTrue(new File(System.getProperty("user.dir") + "/sample.mp4").exists());

@@ -6,9 +6,7 @@ import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -151,19 +149,20 @@ public class SimulatorManager implements ISimulatorManager {
     }
 
     @Override
-    public void startScreenRecording(String UDID,String pathWithFileName) throws IOException {
+    public Process startScreenRecording(String UDID, String pathWithFileName) throws IOException {
         System.out.println("xcrun simctl io " + UDID + " recordVideo " + pathWithFileName);
         screenRecordProcess = commandPromptUtil
                 .execForProcessToExecute("xcrun simctl io " + UDID + " recordVideo " + pathWithFileName);
         System.out.println(screenRecordProcess);
+        return screenRecordProcess;
     }
 
     @Override
     public void stopScreenRecording() throws IOException, InterruptedException {
         Integer processId = getPid(screenRecordProcess);
-        String command = "kill -2 " + processId;
-        System.out.println("Stopping Video Recording");
-        commandPromptUtil.execForProcessToExecute(command).waitFor();
+        String command = "kill -9 " + processId;
+        System.out.println("Stopping Video Recording" + command);
+        commandPromptUtil.execForProcessToExecute(command);
     }
 
     @Override
