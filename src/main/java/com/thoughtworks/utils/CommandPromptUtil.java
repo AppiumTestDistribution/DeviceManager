@@ -44,21 +44,15 @@ public class CommandPromptUtil {
         return new BufferedReader(isr);
     }
 
-    public void execForProcessToExecute(String cmd) {
-        try {
-            Runtime rt = Runtime.getRuntime();
-            Process pr = rt.exec(cmd);
-            BufferedReader input = new BufferedReader(new InputStreamReader(pr.getInputStream()));
-            String line;
-            while((line=input.readLine()) != null) {
-                System.out.println(line);
-            }
-            int exitVal = pr.waitFor();
-            System.out.println("Exited with error code "+exitVal);
-        } catch(Exception e) {
-            System.out.println(e.toString());
-            e.printStackTrace();
-        }
+    public Process execForProcessToExecute(String cmd) throws IOException {
+        Process pr = null;
+        List<String> commands = new ArrayList<>();
+        commands.add("/bin/sh");
+        commands.add("-c");
+        commands.add(cmd);
+        ProcessBuilder builder = new ProcessBuilder(commands);
+        pr = builder.start();
+        return pr;
     }
 
     public String runProcessCommandToGetDeviceID(String command)
