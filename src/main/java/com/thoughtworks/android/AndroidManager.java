@@ -74,8 +74,7 @@ public class AndroidManager implements Manager {
 
 
     public List<Device> getDevices() throws Exception {
-        List<Device> device = new ArrayList<>();
-        JSONObject adb = new JSONObject();
+        List<Device> devices = new ArrayList<>();
         startADB(); // start adb service
         String output = cmd.runCommandThruProcess("adb devices");
         String[] lines = output.split("\n");
@@ -90,11 +89,11 @@ public class AndroidManager implements Manager {
                     lines[i] = lines[i].replaceAll("device", "");
                     String deviceID = lines[i];
                     JSONObject deviceInfo = getDeviceInfo(deviceID);
-                    device.add(new Device(deviceInfo));
+                    devices.add(new Device(deviceInfo));
                 }
             }
         }
-        return device;
+        return devices;
     }
 
     @Override
