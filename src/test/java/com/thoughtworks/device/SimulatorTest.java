@@ -143,15 +143,15 @@ public class SimulatorTest {
 
     @Test
     public void getPropertiesTest() throws Exception {
-        Device deviceProperties = new DeviceManager().getDeviceProperties("157BFA56-AF97-4DFF-8B98-794EF4ED9E81");
+        Device deviceProperties = new DeviceManager().getDevice("157BFA56-AF97-4DFF-8B98-794EF4ED9E81");
         System.out.println(deviceProperties.getName());
     }
 
     @Test
     public void getDevicePropertiesTest() throws Exception {
-//        List<Device> deviceProperties = new DeviceManager().getDeviceProperties();
+//        List<Device> deviceProperties = new DeviceManager().getDevices();
 //        System.out.println(deviceProperties.get(0).getName());
-        new DeviceManager().getDeviceProperties();
+        new DeviceManager().getDevices();
     }
 
     @Test

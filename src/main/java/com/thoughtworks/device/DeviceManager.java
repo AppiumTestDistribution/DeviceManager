@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 public class DeviceManager implements Manager {
 
     @Override
-    public Device getDeviceProperties(String udid) throws Exception {
+    public Device getDevice(String udid) throws Exception {
         Optional<Device> device = new AndroidManager().getDeviceProperties().stream().filter(d ->
                 udid.equals(d.getUdid())).findFirst();
         Optional<Device> simulator = new SimulatorManager().getAllAvailableSimulators().stream().filter(sim ->
@@ -27,7 +27,7 @@ public class DeviceManager implements Manager {
         return finalDeviceList.get();
     }
 
-    public List<Device> getDeviceProperties() throws Exception {
+    public List<Device> getDevices() throws Exception {
         List<Device> allDevice = new ArrayList<>();
         List<Device> androidDevice = new AndroidManager().getDeviceProperties();
         List<Device> iOSSimulators = new SimulatorManager().getAllBootedSimulators("iOS");

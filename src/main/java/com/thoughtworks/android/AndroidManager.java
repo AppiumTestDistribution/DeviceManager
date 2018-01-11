@@ -98,7 +98,7 @@ public class AndroidManager implements Manager {
     }
 
     @Override
-    public Device getDeviceProperties(String udid) throws Exception {
+    public Device getDevice(String udid) throws Exception {
         Optional<Device> device = getDeviceProperties().stream().filter(d ->
                 udid.equals(d.getUdid())).findFirst();
         return device.orElseThrow(() ->
