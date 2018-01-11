@@ -73,7 +73,7 @@ public class AndroidManager implements Manager {
     }
 
 
-    public List<Device> getDeviceProperties() throws Exception {
+    public List<Device> getDevices() throws Exception {
         List<Device> device = new ArrayList<>();
         JSONObject adb = new JSONObject();
         startADB(); // start adb service
@@ -99,7 +99,7 @@ public class AndroidManager implements Manager {
 
     @Override
     public Device getDevice(String udid) throws Exception {
-        Optional<Device> device = getDeviceProperties().stream().filter(d ->
+        Optional<Device> device = getDevices().stream().filter(d ->
                 udid.equals(d.getUdid())).findFirst();
         return device.orElseThrow(() ->
                 new RuntimeException("Provided DeviceUDID " + udid

@@ -27,7 +27,7 @@ public class IOSManager implements Manager {
 
     @Override
     public Device getDevice(String udid) {
-        Optional<Device> device = getAllAvailableDevices().stream().filter(d ->
+        Optional<Device> device = getDevices().stream().filter(d ->
                     udid.equals(d.getUdid())).findFirst();
         return device.orElseThrow(() ->
                 new RuntimeException("Provided DeviceUDID " + udid
@@ -35,7 +35,7 @@ public class IOSManager implements Manager {
         );
     }
 
-    public List<Device> getAllAvailableDevices() {
+    public List<Device> getDevices() {
         List<Device> device = new ArrayList<>();
         getIOSUDID().forEach(udid -> {
             try {
