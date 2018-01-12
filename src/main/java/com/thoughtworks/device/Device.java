@@ -14,7 +14,7 @@ public class Device {
     private String brand = "Not Supported";
     private String apiLevel = "Not Supported";
     private boolean isDevice;
-    private String deviceModel;
+    private String deviceModel = "Not Supported";
     private String screenSize;
 
     public Device(JSONObject deviceJson, String deviceType) {
@@ -24,7 +24,7 @@ public class Device {
         this.isAvailable = deviceJson.getString("availability").equals("(available)");
         this.deviceType = deviceType;
         String[] osAndVersion = deviceType.split(" ");
-        if(osAndVersion.length == 2){
+        if (osAndVersion.length == 2) {
             this.os = osAndVersion[0];
             this.osVersion = osAndVersion[1];
         }
