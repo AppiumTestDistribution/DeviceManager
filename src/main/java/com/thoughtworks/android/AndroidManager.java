@@ -6,14 +6,15 @@ import com.thoughtworks.utils.CommandPromptUtil;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.lang.reflect.Field;
+import java.util.*;
 
 public class AndroidManager implements Manager {
 
     private CommandPromptUtil cmd;
     private JSONObject adbDevices;
+    private static Map<String, Process> processUDIDs = new HashMap<>();
+    Process process;
 
     public AndroidManager() {
         cmd = new CommandPromptUtil();
@@ -51,10 +52,10 @@ public class AndroidManager implements Manager {
                 deviceID +
                 " shell getprop ro.product.manufacturer");
         String getScreenResolution = cmd.runCommandThruProcess("adb -s " + deviceID
-                + " shell wm size").split(":")[1].replace("\n","");
+                + " shell wm size").split(":")[1].replace("\n", "");
 
         boolean isDevice = true;
-        if(deviceOrEmulator.contains("Genymotion")
+        if (deviceOrEmulator.contains("Genymotion")
                 || deviceOrEmulator.contains("unknown")) {
             isDevice = false;
         }
@@ -66,9 +67,9 @@ public class AndroidManager implements Manager {
         adbDevices.put("apiLevel", apiLevel);
         adbDevices.put("brand", brand);
         adbDevices.put("udid", deviceID);
-        adbDevices.put("isDevice",isDevice);
-        adbDevices.put("deviceModel",deviceModel);
-        adbDevices.put("screenSize",getScreenResolution);
+        adbDevices.put("isDevice", isDevice);
+        adbDevices.put("deviceModel", deviceModel);
+        adbDevices.put("screenSize", getScreenResolution);
         return adbDevices;
     }
 
@@ -106,5 +107,28 @@ public class AndroidManager implements Manager {
         );
     }
 
+    public void startADBLog(String udid, String filePath) throws Exception {
+        cmd.execForProcessToExecute("adb -s " + udid + " logcat -b all -c");
+        process = cmd.execForProcessToExecute("adb -s " + udid + " logcat > " + filePath);
+        processUDIDs.put(udid, process);
+    }
 
+    public void stopADBLog(String udid) throws Exception {
+        Process p = processUDIDs.get(udid);
+        int id = (getPid(p) > 0) ? getPid(p) : 0;
+        cmd.runCommandThruProcess("kill -9 " + id);
+    }
+
+    public int getPid(Process process) {
+        try {
+            Class<?> cProcessImpl = process.getClass();
+            Field fPid = cProcessImpl.getDeclaredField("pid");
+            if (!fPid.isAccessible()) {
+                fPid.setAccessible(true);
+            }
+            return fPid.getInt(process);
+        } catch (Exception e) {
+            return -1;
+        }
+    }
 }
