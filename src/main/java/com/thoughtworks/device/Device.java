@@ -4,8 +4,8 @@ import org.json.JSONObject;
 
 public class Device {
 
-    private final String udid;
-    private final String name;
+    private String udid;
+    private String name;
     private String state = "Not Supported";
     private boolean isAvailable;
     private String osVersion;
@@ -40,6 +40,9 @@ public class Device {
         this.isDevice = deviceJson.getBoolean("isDevice");
         this.deviceModel = deviceJson.getString("deviceModel");
         this.screenSize = deviceJson.getString("screenSize");
+    }
+
+    public Device() {
     }
 
     public String getUdid() {
