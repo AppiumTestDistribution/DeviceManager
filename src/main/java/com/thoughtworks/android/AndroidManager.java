@@ -114,6 +114,14 @@ public class AndroidManager implements Manager {
         return "Collecting ADB logs for device " + udid + " in file " + filePath;
     }
 
+    public String startADBLogWithPackage(String udid, String packageName, String filePath) throws Exception {
+        cmd.execForProcessToExecute("adb -s " + udid + " logcat -b all -c");
+        process = cmd.execForProcessToExecute("adb -s " + udid
+                + " logcat | grep -F \"`adb shell ps | grep " + packageName + " | cut -c10-15`\"" + " > " + filePath);
+        processUDIDs.put(udid, process);
+        return "Collecting ADB logs for device " + udid + " for package "+packageName+" in file " + filePath;
+    }
+
     public String stopADBLog(String udid) throws Exception {
         Process p = processUDIDs.get(udid);
         int id = (getPid(p) > 0) ? getPid(p) : 0;
