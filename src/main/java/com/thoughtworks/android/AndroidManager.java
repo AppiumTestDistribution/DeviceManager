@@ -119,14 +119,17 @@ public class AndroidManager implements Manager {
         process = cmd.execForProcessToExecute("adb -s " + udid
                 + " logcat | grep -F \"`adb shell ps | grep " + packageName + " | cut -c10-15`\"" + " > " + filePath);
         processUDIDs.put(udid, process);
-        return "Collecting ADB logs for device " + udid + " for package "+packageName+" in file " + filePath;
+        return "Collecting ADB logs for device " + udid + " for package " + packageName + " in file " + filePath;
     }
 
     public String stopADBLog(String udid) throws Exception {
         Process p = processUDIDs.get(udid);
-        int id = (getPid(p) > 0) ? getPid(p) : 0;
-        cmd.runCommandThruProcess("kill -9 " + id);
-        return "Stopped collecting ADB logs " + udid;
+        if (getPid(p) > 0) {
+            cmd.runCommandThruProcess("kill -9 " + getPid(p));
+            return "Stopped collecting ADB logs " + udid;
+        } else
+            return "No process found to kill";
+
     }
 
     public int getPid(Process process) {
