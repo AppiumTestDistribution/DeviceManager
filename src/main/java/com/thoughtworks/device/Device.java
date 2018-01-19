@@ -16,6 +16,7 @@ public class Device {
     private boolean isDevice;
     private String deviceModel = "Not Supported";
     private String screenSize;
+    private String deviceManufacturer;
 
     public Device(JSONObject deviceJson, String deviceType) {
         this.udid = deviceJson.getString("udid");
@@ -91,6 +92,14 @@ public class Device {
 
     public String getScreenSize() {
         return screenSize;
+    }
+
+    public String getDeviceManufacturer() {
+        return deviceManufacturer;
+    }
+
+    public void setDeviceManufacturer(String deviceManufacturer) {
+        this.deviceManufacturer = deviceManufacturer;
     }
 
 }

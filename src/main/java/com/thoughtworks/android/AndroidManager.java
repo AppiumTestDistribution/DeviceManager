@@ -70,6 +70,7 @@ public class AndroidManager implements Manager {
         adbDevices.put("isDevice", isDevice);
         adbDevices.put("deviceModel", deviceModel);
         adbDevices.put("screenSize", getScreenResolution);
+        adbDevices.put("deviceManufacturer",deviceOrEmulator);
         return adbDevices;
     }
 
