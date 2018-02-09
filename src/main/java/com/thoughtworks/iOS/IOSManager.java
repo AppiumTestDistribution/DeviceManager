@@ -52,7 +52,7 @@ public class IOSManager implements Manager {
     private JSONObject getDeviceInfo(String udid) throws InterruptedException, IOException {
 
         String model = cmd.runProcessCommandToGetDeviceID("ideviceinfo -u "
-                + udid + " | grep ProductVersion").replace("\n", "");
+                + udid + " | grep ProductType").replace("\n", "");
 
         String name = cmd.runProcessCommandToGetDeviceID("idevicename --udid " + udid);
         String osVersion = cmd.runProcessCommandToGetDeviceID("ideviceinfo --udid "
