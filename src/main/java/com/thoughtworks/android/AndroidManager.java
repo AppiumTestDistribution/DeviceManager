@@ -71,6 +71,7 @@ public class AndroidManager implements Manager {
         adbDevices.put("deviceModel", deviceModel);
         adbDevices.put("screenSize", getScreenResolution);
         adbDevices.put("deviceManufacturer",deviceOrEmulator);
+        adbDevices.put("os", "android");
         return adbDevices;
     }
 
