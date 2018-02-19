@@ -34,8 +34,10 @@ public class CommandPromptUtil {
 
     private BufferedReader getBufferedReader(String command) throws IOException {
         List<String> commands = new ArrayList<>();
-        commands.add("/bin/sh");
-        commands.add("-c");
+       //commands.add("/bin/sh");
+        commands.add("cmd");      // Replace "cmd" by "/bin/sh" is you are running on MAC
+        //commands.add("-c");
+        commands.add("/c");       // Replace "/c" by "-c" is you are running on MAC
         commands.add(command);
         ProcessBuilder builder = new ProcessBuilder(commands);
         final Process process = builder.start();
@@ -47,8 +49,10 @@ public class CommandPromptUtil {
     public Process execForProcessToExecute(String cmd) throws IOException {
         Process pr = null;
         List<String> commands = new ArrayList<>();
-        commands.add("/bin/sh");
-        commands.add("-c");
+        //commands.add("/bin/sh");
+        commands.add("cmd");        // Replace "cmd" by "/bin/sh" is you are running on MAC
+        commands.add("/c");         // Replace "/c" by "-c" is you are running on MAC
+        //commands.add("-c");
         commands.add(cmd);
         ProcessBuilder builder = new ProcessBuilder(commands);
         pr = builder.start();
