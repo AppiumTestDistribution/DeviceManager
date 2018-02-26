@@ -57,7 +57,8 @@ public class IOSManager implements Manager {
         String name = cmd.runProcessCommandToGetDeviceID("idevicename --udid " + udid);
         String osVersion = cmd.runProcessCommandToGetDeviceID("ideviceinfo --udid "
                 + udid
-                + " | grep ProductVersion").replace("\n", "");
+                + " | grep ProductVersion").replace("ProductVersion:", "")
+                .replace("\n","").trim();
 
         iOSDevices.put("deviceModel",model);
         iOSDevices.put("udid",udid);
