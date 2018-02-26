@@ -9,6 +9,11 @@ import java.util.List;
 
 
 public class CommandPromptUtil {
+    String OSType =null;
+    public CommandPromptUtil()
+    {
+        OSType = System.getProperty("os.name");
+    }
 
     public String runCommandThruProcess(String command)
             throws InterruptedException, IOException {
@@ -34,8 +39,16 @@ public class CommandPromptUtil {
 
     private BufferedReader getBufferedReader(String command) throws IOException {
         List<String> commands = new ArrayList<>();
-        commands.add("/bin/sh");
-        commands.add("-c");
+        if(OSType.contains("Windows"))
+        {
+            commands.add("cmd");
+            commands.add("/c");
+        }
+        else
+        {
+            commands.add("/bin/sh");
+            commands.add("-c");
+        }
         commands.add(command);
         ProcessBuilder builder = new ProcessBuilder(commands);
         final Process process = builder.start();
@@ -47,8 +60,16 @@ public class CommandPromptUtil {
     public Process execForProcessToExecute(String cmd) throws IOException {
         Process pr = null;
         List<String> commands = new ArrayList<>();
-        commands.add("/bin/sh");
-        commands.add("-c");
+
+        if(OSType.contains("Windows"))
+        {
+            commands.add("cmd");
+            commands.add("/c");
+        }
+        else {
+            commands.add("/bin/sh");
+            commands.add("-c");
+        }
         commands.add(cmd);
         ProcessBuilder builder = new ProcessBuilder(commands);
         pr = builder.start();
@@ -65,5 +86,4 @@ public class CommandPromptUtil {
         }
         return allLine.trim();
     }
-
 }
