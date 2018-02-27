@@ -30,9 +30,13 @@ public class DeviceManager implements Manager {
     public List<Device> getDevices() throws Exception {
         List<Device> allDevice = new ArrayList<>();
         List<Device> androidDevice = new AndroidManager().getDevices();
-        List<Device> iOSSimulators = new SimulatorManager().getAllBootedSimulators("iOS");
-        List<Device> iOSRealDevice = new IOSManager().getDevices();
-        Stream.of(androidDevice, iOSSimulators, iOSRealDevice).forEach(allDevice::addAll);
+        if(System.getProperty("os.name").contains("Mac")) {
+            List<Device> iOSSimulators = new SimulatorManager().getAllBootedSimulators("iOS");
+            List<Device> iOSRealDevice = new IOSManager().getDevices();
+            Stream.of(androidDevice, iOSSimulators, iOSRealDevice).forEach(allDevice::addAll);
+        } else {
+            Stream.of(androidDevice).forEach(allDevice::addAll);
+        }
         return allDevice;
     }
 }
