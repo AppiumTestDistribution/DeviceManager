@@ -13,7 +13,6 @@ import java.util.Optional;
 public class IOSManager implements Manager {
 
     private CommandPromptUtil cmd;
-    public ArrayList<String> deviceUDIDiOS = new ArrayList<String>();
     private final static int IOS_UDID_LENGTH = 40;
     private final static int SIM_UDID_LENGTH = 36;
     JSONObject iOSDevices;
@@ -74,6 +73,7 @@ public class IOSManager implements Manager {
 
 
     private ArrayList<String> getIOSUDID() {
+        ArrayList<String> deviceUDIDiOS = new ArrayList<String>();
         try {
             int startPos = 0;
             int endPos = IOS_UDID_LENGTH - 1;
