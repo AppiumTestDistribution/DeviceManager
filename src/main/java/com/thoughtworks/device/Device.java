@@ -62,6 +62,7 @@ public class Device {
         this.deviceModel = deviceJson.getString("deviceModel");
         this.screenSize = deviceJson.getString("screenSize");
         this.os = deviceJson.getString("os");
+        this.deviceManufacturer=deviceJson.getString("deviceManufacturer");
     }
 
     public Device() {
