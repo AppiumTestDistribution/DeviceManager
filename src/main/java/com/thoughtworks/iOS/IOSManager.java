@@ -68,6 +68,7 @@ public class IOSManager implements Manager {
         iOSDevices.put("apiLevel","");
         iOSDevices.put("osVersion",osVersion);
         iOSDevices.put("os", "ios");
+        iOSDevices.put("deviceManufacturer", "apple");
         return iOSDevices;
     }
 

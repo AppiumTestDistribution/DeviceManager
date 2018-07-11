@@ -49,6 +49,7 @@ public class Device {
             this.osVersion = osAndVersion[1];
         }
         this.deviceModel = deviceIdentifier.getOrDefault(this.name, "Not Supported");
+        this.deviceManufacturer= "apple";
     }
 
 
