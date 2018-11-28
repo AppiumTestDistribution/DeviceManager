@@ -1,5 +1,5 @@
-# iOSDeviceManager
-Utility to Manage Connected iOS Devices &amp; Sims
+# DeviceManager
+Utility to Manage Connected iOS &amp; Android Devices (Including iOS Simulators and Android Emulators)
 
 ## Maven:
 
