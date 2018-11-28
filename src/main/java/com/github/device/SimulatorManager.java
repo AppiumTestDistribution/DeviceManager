@@ -1,7 +1,7 @@
-package com.thoughtworks.device;
+package com.github.device;
 
-import com.thoughtworks.interfaces.ISimulatorManager;
-import com.thoughtworks.utils.CommandPromptUtil;
+import com.github.interfaces.ISimulatorManager;
+import com.github.utils.CommandPromptUtil;
 import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;

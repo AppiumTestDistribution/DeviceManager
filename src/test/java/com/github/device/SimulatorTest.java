@@ -1,4 +1,4 @@
-package com.thoughtworks.device;
+package com.github.device;
 
 import org.junit.Assert;
 import org.junit.Test;

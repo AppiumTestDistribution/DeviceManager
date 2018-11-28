@@ -1,8 +1,8 @@
-package com.thoughtworks.iOS;
+package com.github.iOS;
 
-import com.thoughtworks.device.Device;
-import com.thoughtworks.interfaces.Manager;
-import com.thoughtworks.utils.CommandPromptUtil;
+import com.github.device.Device;
+import com.github.interfaces.Manager;
+import com.github.utils.CommandPromptUtil;
 import org.json.JSONObject;
 
 import java.io.IOException;

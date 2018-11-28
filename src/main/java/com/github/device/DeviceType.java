@@ -1,4 +1,4 @@
-package com.thoughtworks.device;
+package com.github.device;
 
 public class DeviceType {
     private String name;

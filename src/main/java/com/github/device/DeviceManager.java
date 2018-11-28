@@ -1,9 +1,9 @@
-package com.thoughtworks.device;
+package com.github.device;
 
 
-import com.thoughtworks.android.AndroidManager;
-import com.thoughtworks.iOS.IOSManager;
-import com.thoughtworks.interfaces.Manager;
+import com.github.android.AndroidManager;
+import com.github.iOS.IOSManager;
+import com.github.interfaces.Manager;
 
 import java.util.ArrayList;
 import java.util.List;

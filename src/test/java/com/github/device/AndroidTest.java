@@ -1,7 +1,7 @@
-package com.thoughtworks.device;
+package com.github.device;
 
 
-import com.thoughtworks.android.AndroidManager;
+import com.github.android.AndroidManager;
 import org.junit.Test;
 
 public class AndroidTest {

@@ -1,4 +1,4 @@
-package com.thoughtworks.utils;
+package com.github.utils;
 
 import java.io.BufferedReader;
 import java.io.IOException;

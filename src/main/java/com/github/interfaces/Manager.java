@@ -1,7 +1,7 @@
-package com.thoughtworks.interfaces;
+package com.github.interfaces;
 
 
-import com.thoughtworks.device.Device;
+import com.github.device.Device;
 
 import java.util.List;
 
