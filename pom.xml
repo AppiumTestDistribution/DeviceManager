@@ -6,6 +6,33 @@
     <groupId>com.github.appiumtestdistribution</groupId>
     <artifactId>devicemanager</artifactId>
     <version>2.2</version>
+    <name>DeviceManager</name>
+    <description>"Utility to Manage Connected iOS and Android Devices (Including iOS Simulators and Android Emulators)"</description>
+    <url>https://github.com/AppiumTestDistribution/DeviceManager</url>
+    <scm>
+        <url>https://github.com/AppiumTestDistribution/DeviceManager.git</url>
+        <connection>scm:git:git@github.com:AppiumTestDistribution/DeviceManager.git</connection>
+        <developerConnection>scm:git:git@github.com:AppiumTestDistribution/DeviceManager.git</developerConnection>
+    </scm>
+    <licenses>
+        <license>
+            <name>GNU Public License version 3.0</name>
+            <url>http://www.gnu.org/licenses/gpl-3.0.txt</url>
+        </license>
+    </licenses>
+    <developers>
+        <developer>
+            <name>Sai Krishna</name>
+            <email>saikrishna321@yahoo.com</email>
+            <roles>
+                <role>owner</role>
+            </roles>
+        </developer>
+        <developer>
+            <name>Srinivasan Sekar</name>
+            <email>srinivasan.sekar1990@gmail.com</email>
+        </developer>
+    </developers>
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
@@ -23,8 +50,80 @@
             <version>20170516</version>
         </dependency>
     </dependencies>
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
+
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.18.1</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.0.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.6</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>2.3</version>
+                <configuration>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -35,4 +134,15 @@
             </plugin>
         </plugins>
     </build>
+    <profiles>
+        <profile>
+            <id>disable-java8-doclint</id>
+            <activation>
+                <jdk>[1.8,)</jdk>
+            </activation>
+            <properties>
+                <additionalparam>-Xdoclint:none</additionalparam>
+            </properties>
+        </profile>
+    </profiles>
 </project>
