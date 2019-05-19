@@ -1,10 +1,12 @@
 package com.github.device;
 
+import lombok.Data;
 import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@Data
 public class Device {
 
     private String udid;
@@ -68,61 +70,4 @@ public class Device {
 
     public Device() {
     }
-
-    public String getUdid() {
-        return udid;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public boolean isAvailable() {
-        return isAvailable;
-    }
-
-    public String getDeviceType() {
-        return deviceType;
-    }
-
-    public String getOsVersion() {
-        return osVersion;
-    }
-
-    public String getOs() {
-        return os;
-    }
-
-    public String getBrand() {
-        return brand;
-    }
-
-    public String getApiLevel() {
-        return apiLevel;
-    }
-
-    public boolean getIsDevice() {
-        return isDevice;
-    }
-
-    public String getDeviceModel() {
-        return deviceModel;
-    }
-
-    public String getScreenSize() {
-        return screenSize;
-    }
-
-    public String getDeviceManufacturer() {
-        return deviceManufacturer;
-    }
-
-    public void setDeviceManufacturer(String deviceManufacturer) {
-        this.deviceManufacturer = deviceManufacturer;
-    }
-
 }

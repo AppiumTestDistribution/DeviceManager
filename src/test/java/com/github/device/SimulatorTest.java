@@ -26,7 +26,7 @@ public class SimulatorTest {
     public void getSimulatorUDID() throws Throwable {
         simulatorManager = new SimulatorManager();
         String simulatorUDID = simulatorManager.getSimulatorUDID
-                ("iPhone 6s", "11.0", "iOS");
+                ("iPhone 6s", "11.4", "iOS");
         assertTrue(simulatorUDID.length() == 36);
     }
 

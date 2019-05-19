@@ -1,5 +1,8 @@
 package com.github.device;
 
+import lombok.Data;
+
+@Data
 public class DeviceType {
     private String name;
     private String identifier;
@@ -9,11 +12,4 @@ public class DeviceType {
         this.identifier = identifier;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public String getIdentifier() {
-        return identifier;
-    }
 }
