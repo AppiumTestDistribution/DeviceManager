@@ -1,7 +1,9 @@
 package com.github.device;
 
+import lombok.Data;
 import org.json.JSONObject;
 
+@Data
 public class IOSRuntime {
     private final String buildversion;
     private final boolean isAvailable;
@@ -17,29 +19,5 @@ public class IOSRuntime {
         identifier = runtimeJSON.getString("identifier");
         isAvailable = runtimeJSON.getString("availability").equals("(available)");
         os = name.split(" ")[0];
-    }
-
-    public String getBuildversion() {
-        return buildversion;
-    }
-
-    public boolean isAvailable() {
-        return isAvailable;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getIdentifier() {
-        return identifier;
-    }
-
-    public String getVersion() {
-        return version;
-    }
-
-    public String getOs() {
-        return os;
     }
 }
