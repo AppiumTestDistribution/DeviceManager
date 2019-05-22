@@ -22,6 +22,7 @@ public class Device {
     private String deviceModel = "Not Supported";
     private String screenSize;
     private String deviceManufacturer;
+    private boolean isCloud = false;
 
     private static Map<String, String> deviceIdentifier = new HashMap<>();
 
