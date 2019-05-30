@@ -46,13 +46,27 @@ public class Device {
         this.state = deviceJson.getString("state");
         this.isAvailable = deviceJson.getString("availability").equals("(available)");
         this.deviceType = deviceType;
+        getOSAndVersion(deviceType);
+        this.deviceModel = deviceIdentifier.getOrDefault(this.name, "Not Supported");
+        this.deviceManufacturer= "apple";
+    }
+
+    private void getOSAndVersion(String deviceType) {
         String[] osAndVersion = deviceType.split(" ");
         if (osAndVersion.length == 2) {
             this.os = osAndVersion[0];
             this.osVersion = osAndVersion[1];
+        } else {
+            String[] splitDeviceType = deviceType.split("\\.");
+            if (splitDeviceType.length == 5) {
+                osAndVersion = splitDeviceType[splitDeviceType.length - 1].split("-");
+                if (osAndVersion.length == 3) {
+                    this.os = osAndVersion[0];
+                    this.osVersion = osAndVersion[1] + "." + osAndVersion[2];
+                }
+            }
         }
-        this.deviceModel = deviceIdentifier.getOrDefault(this.name, "Not Supported");
-        this.deviceManufacturer= "apple";
+
     }
 
 

@@ -163,4 +163,15 @@ public class SimulatorTest {
         simulatorManager.stopScreenRecording();
         Assert.assertTrue(new File(System.getProperty("user.dir") + "/sample.mp4").exists());
     }
+
+    @Test
+    public void getOSandVersionLatest() throws Throwable {
+        simulatorManager = new SimulatorManager();
+        String iOSUDID = simulatorManager.getSimulatorUDID
+                ("iPhone 6s", "12.2", "iOS");
+        Device deviceDetails = simulatorManager.getSimulatorDetailsFromUDID(iOSUDID);
+        assertEquals(deviceDetails.getOsVersion(),"12.2");
+        assertEquals(deviceDetails.getOs(),"iOS");
+    }
+
 }
