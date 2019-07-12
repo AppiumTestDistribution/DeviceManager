@@ -67,7 +67,7 @@ public class IOSManager implements Manager {
         iOSDevices.put("screenSize","Not Supported");
         iOSDevices.put("apiLevel","");
         iOSDevices.put("osVersion",osVersion);
-        iOSDevices.put("os", "ios");
+        iOSDevices.put("os", "iOS");
         iOSDevices.put("deviceManufacturer", "apple");
         return iOSDevices;
     }
