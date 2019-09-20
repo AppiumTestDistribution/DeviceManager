@@ -23,8 +23,69 @@ public class Device {
     private String screenSize;
     private String deviceManufacturer;
     private boolean isCloud = false;
-
     private static Map<String, String> deviceIdentifier = new HashMap<>();
+
+
+    public String getUdid() {
+        return udid;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public boolean isAvailable() {
+        return isAvailable;
+    }
+
+    public String getOsVersion() {
+        return osVersion;
+    }
+
+    public String getDeviceType() {
+        return deviceType;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public String getApiLevel() {
+        return apiLevel;
+    }
+
+    public boolean isDevice() {
+        return isDevice;
+    }
+
+    public String getDeviceModel() {
+        return deviceModel;
+    }
+
+    public String getScreenSize() {
+        return screenSize;
+    }
+
+    public String getDeviceManufacturer() {
+        return deviceManufacturer;
+    }
+
+    public boolean isCloud() {
+        return isCloud;
+    }
+
+    public static Map<String, String> getDeviceIdentifier() {
+        return deviceIdentifier;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getOs() {
+        return os;
+    }
+
 
     static {
         deviceIdentifier.put("iPhone 5s", "iPhone6,1");
@@ -48,7 +109,7 @@ public class Device {
         this.deviceType = deviceType;
         getOSAndVersion(deviceType);
         this.deviceModel = deviceIdentifier.getOrDefault(this.name, "Not Supported");
-        this.deviceManufacturer= "apple";
+        this.deviceManufacturer = "apple";
     }
 
     private void getOSAndVersion(String deviceType) {
@@ -80,7 +141,7 @@ public class Device {
         this.deviceModel = deviceJson.getString("deviceModel");
         this.screenSize = deviceJson.getString("screenSize");
         this.os = deviceJson.getString("os");
-        this.deviceManufacturer=deviceJson.getString("deviceManufacturer");
+        this.deviceManufacturer = deviceJson.getString("deviceManufacturer");
     }
 
     public Device() {
