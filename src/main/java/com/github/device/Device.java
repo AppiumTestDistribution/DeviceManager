@@ -44,7 +44,7 @@ public class Device {
         this.udid = deviceJson.getString("udid");
         this.name = deviceJson.getString("name");
         this.state = deviceJson.getString("state");
-        this.isAvailable = deviceJson.getString("availability").equals("(available)");
+        this.isAvailable = deviceJson.getBoolean("isAvailable");
         this.deviceType = deviceType;
         getOSAndVersion(deviceType);
         this.deviceModel = deviceIdentifier.getOrDefault(this.name, "Not Supported");
