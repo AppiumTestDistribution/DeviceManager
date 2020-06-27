@@ -17,10 +17,10 @@ public class IOSManager implements Manager {
     private final static int IOS_UDID_LENGTH = 40;
     private final static int SIM_UDID_LENGTH = 36;
     JSONObject iOSDevices;
-/*    String profile = "system_profiler SPUSBDataType | sed -n -E -e '/(iPhone|iPad|iPod)/"
-        + ",/Serial/s/ *Serial Number: *(.+)/\\1/p'";*/
+    String profile = "system_profiler SPUSBDataType | sed -n -E -e '/(iPhone|iPad|iPod)/"
+        + ",/Serial/s/ *Serial Number: *(.+)/\\1/p'";
 
-    String profile = "idevice_id --list";
+    /*String profile = "idevice_id --list";*/
 
     public IOSManager() {
         cmd = new CommandPromptUtil();
@@ -77,14 +77,26 @@ public class IOSManager implements Manager {
 
 
     private List<String> getIOSUDID() {
+        ArrayList<String> iosDeviceUDIDS = new ArrayList<>();
         try {
             Optional<String> getIOSDeviceID = Optional.of(cmd.runProcessCommandToGetDeviceID(profile));
             String[] iosDevices = getIOSDeviceID.get().split("\n");
-            return Arrays.asList(iosDevices);
+            for (String iosDevice : iosDevices) {
+                if (iosDevice.length() == 24) {
+                     iosDeviceUDIDS.add(addChar(iosDevice, '-', 8));
+                } else {
+                    iosDeviceUDIDS.add(iosDevice);
+                }
+            }
+            return iosDeviceUDIDS;
         } catch (IOException e) {
             e.printStackTrace();
             throw new IllegalStateException("Failed to fetch iOS device connected");
         }
 
+    }
+
+    private String addChar(String str, char ch, int position) {
+        return str.substring(0, position) + ch + str.substring(position);
     }
 }
