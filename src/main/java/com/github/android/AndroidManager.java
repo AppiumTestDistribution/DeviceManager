@@ -21,9 +21,7 @@ public class AndroidManager implements Manager {
         adbDevices = new JSONObject();
     }
 
-    /**
-     * This method start adb server
-     */
+
     public void startADB() throws Exception {
         String output = cmd.runCommandThruProcess("adb start-server");
         String[] lines = output.split("\n");

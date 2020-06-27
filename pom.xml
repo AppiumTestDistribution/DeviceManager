@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.github.appiumtestdistribution</groupId>
     <artifactId>devicemanager</artifactId>
-    <version>3.0</version>
+    <version>3.1</version>
     <name>DeviceManager</name>
     <description>"Utility to Manage Connected iOS and Android Devices (Including iOS Simulators and Android Emulators)"</description>
     <url>https://github.com/AppiumTestDistribution/DeviceManager</url>

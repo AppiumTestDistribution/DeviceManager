@@ -204,9 +204,7 @@ public class SimulatorManager implements ISimulatorManager {
         commandPromptUtil.runCommandThruProcess("xcrun simctl delete " + simulatorUDID);
     }
 
-    /**
-     * Gets all available Simulators
-     */
+
     public List<Device> getAllAvailableSimulators() throws IOException, InterruptedException {
         CommandPromptUtil commandPromptUtil = new CommandPromptUtil();
         String simulatorJsonString = commandPromptUtil.runCommandThruProcess("xcrun simctl list -j devices");
@@ -225,9 +223,7 @@ public class SimulatorManager implements ISimulatorManager {
         return deviceList;
     }
 
-    /**
-     * Gets all available DeviceType
-     */
+
     private List<DeviceType> getAllDeviceTypes() throws IOException, InterruptedException {
         CommandPromptUtil commandPromptUtil = new CommandPromptUtil();
         String deviceTypesJSONString = commandPromptUtil.runCommandThruProcess("xcrun simctl list -j devicetypes");
@@ -243,9 +239,7 @@ public class SimulatorManager implements ISimulatorManager {
         return deviceTypes;
     }
 
-    /**
-     * Gets all available Runtimes
-     */
+
     private List<IOSRuntime> getAllRuntimes() throws IOException, InterruptedException {
         CommandPromptUtil commandPromptUtil = new CommandPromptUtil();
         String runtimesJSONString = commandPromptUtil.runCommandThruProcess("xcrun simctl list -j runtimes");
