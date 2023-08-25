@@ -7,9 +7,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class SimulatorTest {
 
@@ -27,7 +25,7 @@ public class SimulatorTest {
     public void getSimulatorUDID() throws Throwable {
         simulatorManager = new SimulatorManager();
         String simulatorUDID = simulatorManager.getSimulatorUDID
-                ("iPhone 6s", "11.4", "iOS");
+                ("iPhone 14s", "11.4", "iOS");
         assertTrue(simulatorUDID.length() == 36);
     }
 
@@ -36,9 +34,9 @@ public class SimulatorTest {
         simulatorManager = new SimulatorManager();
         try {
             simulatorManager.getSimulatorUDID
-                    ("iPhone 6s", "9.99" , "iOS");
+                    ("iPhone 14s", "9.99" , "iOS");
         } catch (RuntimeException e) {
-            assertEquals(e.getMessage(),"Device Not found with deviceName-iPhone 6s osVersion-9.99 osType-iOS");
+            assertEquals(e.getMessage(),"Device Not found with deviceName-iPhone 14s osVersion-9.99 osType-iOS");
         }
     }
 
@@ -47,9 +45,9 @@ public class SimulatorTest {
         simulatorManager = new SimulatorManager();
         try {
             simulatorManager.getSimulatorUDID
-                    ("iPhone 6ss", "11.0", "iOS");
+                    ("iPhone 14ss", "16.4", "iOS");
         } catch (RuntimeException e) {
-            assertEquals(e.getMessage(),"Device Not found with deviceName-iPhone 6ss osVersion-11.0 osType-iOS");
+            assertEquals(e.getMessage(),"Device Not found with deviceName-iPhone 14ss osVersion-16.4 osType-iOS");
         }
     }
 
@@ -57,7 +55,7 @@ public class SimulatorTest {
     public void getSimulatorStateTest() throws Throwable {
         simulatorManager = new SimulatorManager();
         String simulatorState = simulatorManager.getSimulatorState(
-                "iPhone 6s", "11.0", "iOS");
+                "iPhone 14s", "16.4", "iOS");
         assertNotNull(simulatorState);
     }
 
@@ -65,23 +63,23 @@ public class SimulatorTest {
     public void bootSimulatorAndCheckStatus() throws Throwable {
         simulatorManager = new SimulatorManager();
         simulatorManager.bootSimulator(
-                "iPhone 6", "11.0", "iOS");
-        String deviceState = simulatorManager.getSimulatorState("iPhone 6",
-                "11.0", "iOS");
+                "iPhone 14", "16.4", "iOS");
+        String deviceState = simulatorManager.getSimulatorState("iPhone 14",
+                "16.4", "iOS");
         assertEquals(deviceState,"Booted");
     }
 
     @Test
     public void installApp() throws Throwable {
         simulatorManager = new SimulatorManager();
-        simulatorManager.installAppOnSimulator("iPhone 6", "11.0", "iOS"
+        simulatorManager.installAppOnSimulator("iPhone 14", "16.4", "iOS"
         ,System.getProperty("user.dir") + "/VodQAReactNative.app");
     }
 
     @Test
     public void uninstallApp() throws Throwable {
         simulatorManager = new SimulatorManager();
-        simulatorManager.uninstallAppFromSimulator("iPhone 6", "11.0", "iOS"
+        simulatorManager.uninstallAppFromSimulator("iPhone 14", "16.4", "iOS"
                 , "com.hariharanweb");
     }
 
@@ -91,13 +89,13 @@ public class SimulatorTest {
         long randomNumber = System.currentTimeMillis();
         String deviceName = "srini" + randomNumber;
 
-        simulatorManager.createSimulator(deviceName, "iPhone 6", "11.0","iOS");
-        assertNotNull(simulatorManager.getSimulatorState(deviceName, "11.0", "iOS"));
-        simulatorManager.deleteSimulator(deviceName, "11.0", "iOS");
+        simulatorManager.createSimulator(deviceName, "iPhone 14", "16.4","iOS");
+        assertNotNull(simulatorManager.getSimulatorState(deviceName, "16.4", "iOS"));
+        simulatorManager.deleteSimulator(deviceName, "16.4", "iOS");
         try {
-            simulatorManager.deleteSimulator(deviceName, "11.0", "iOS");
+            simulatorManager.deleteSimulator(deviceName, "16.4", "iOS");
         } catch (Exception e){
-            assertEquals("Device Not found with deviceName-" + deviceName + " osVersion-11.0 osType-iOS", e.getMessage());
+            assertEquals("Device Not found with deviceName-" + deviceName + " osVersion-16.4 osType-iOS", e.getMessage());
         }
     }
 
@@ -105,9 +103,9 @@ public class SimulatorTest {
     public void getDeviceDetails() throws Throwable {
         simulatorManager = new SimulatorManager();
         String iOSUDID = simulatorManager.getSimulatorUDID
-                ("iPhone 6s", "11.3", "iOS");
+                ("iPhone 14s", "11.3", "iOS");
         Device deviceDetails = simulatorManager.getSimulatorDetailsFromUDID(iOSUDID);
-        assertEquals(deviceDetails.getName(),"iPhone 6s");
+        assertEquals(deviceDetails.getName(),"iPhone 14s");
         assertEquals(deviceDetails.getDeviceModel(),"iPhone8,1");
     }
 
@@ -115,9 +113,9 @@ public class SimulatorTest {
     public void captureScreenshot() throws Throwable {
         simulatorManager = new SimulatorManager();
         simulatorManager.bootSimulator(
-                "iPhone 6", "11.0", "iOS");
+                "iPhone 14", "16.4", "iOS");
         String iOSUDID = simulatorManager.getSimulatorUDID
-                ("iPhone 6", "11.0", "iOS");
+                ("iPhone 14", "16.4", "iOS");
         simulatorManager.captureScreenshot(iOSUDID,"simulator",
                 System.getProperty("user.dir") + "/target/", "jpeg");
         assertTrue(new File(System.getProperty("user.dir")
@@ -139,7 +137,7 @@ public class SimulatorTest {
     @Test
     public void uploadMediaToSimulatorTest() throws Throwable {
         simulatorManager = new SimulatorManager();
-        simulatorManager.uploadMediaToSimulator("iPhone 6", "11.0", "iOS",
+        simulatorManager.uploadMediaToSimulator("iPhone 14", "16.4", "iOS",
                 "/Users/ssekar/Desktop/GC_BCPage.png");
     }
 
@@ -169,9 +167,9 @@ public class SimulatorTest {
     public void getOSandVersionLatest() throws Throwable {
         simulatorManager = new SimulatorManager();
         String iOSUDID = simulatorManager.getSimulatorUDID
-                ("iPhone 6s", "12.2", "iOS");
+                ("iPhone 14", "16.4", "iOS");
         Device deviceDetails = simulatorManager.getSimulatorDetailsFromUDID(iOSUDID);
-        assertEquals(deviceDetails.getOsVersion(),"12.2");
+        assertEquals(deviceDetails.getOsVersion(),"16.4");
         assertEquals(deviceDetails.getOs(),"iOS");
     }
 

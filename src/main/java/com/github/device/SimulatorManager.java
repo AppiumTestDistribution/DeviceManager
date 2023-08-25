@@ -2,7 +2,8 @@ package com.github.device;
 
 import com.github.interfaces.ISimulatorManager;
 import com.github.utils.CommandPromptUtil;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -17,7 +18,7 @@ import java.util.stream.Collectors;
 
 public class SimulatorManager implements ISimulatorManager {
 
-    final static Logger logger = Logger.getLogger(SimulatorManager.class);
+    final static Logger logger = LogManager.getLogger(SimulatorManager.class);
     private CommandPromptUtil commandPromptUtil;
     String ANSI_RED_BACKGROUND = "\u001B[41m";
     Process screenRecordProcess;
