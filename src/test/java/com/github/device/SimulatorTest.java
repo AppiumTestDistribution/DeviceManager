@@ -25,7 +25,7 @@ public class SimulatorTest {
     public void getSimulatorUDID() throws Throwable {
         simulatorManager = new SimulatorManager();
         String simulatorUDID = simulatorManager.getSimulatorUDID
-                ("iPhone 14s", "11.4", "iOS");
+                ("iPhone 14", "11.4", "iOS");
         assertTrue(simulatorUDID.length() == 36);
     }
 
@@ -34,9 +34,9 @@ public class SimulatorTest {
         simulatorManager = new SimulatorManager();
         try {
             simulatorManager.getSimulatorUDID
-                    ("iPhone 14s", "9.99" , "iOS");
+                    ("iPhone 14", "9.99" , "iOS");
         } catch (RuntimeException e) {
-            assertEquals(e.getMessage(),"Device Not found with deviceName-iPhone 14s osVersion-9.99 osType-iOS");
+            assertEquals(e.getMessage(),"Device Not found with deviceName-iPhone 14 osVersion-9.99 osType-iOS");
         }
     }
 
@@ -45,9 +45,9 @@ public class SimulatorTest {
         simulatorManager = new SimulatorManager();
         try {
             simulatorManager.getSimulatorUDID
-                    ("iPhone 14ss", "16.4", "iOS");
+                    ("iPhone 14", "16.4", "iOS");
         } catch (RuntimeException e) {
-            assertEquals(e.getMessage(),"Device Not found with deviceName-iPhone 14ss osVersion-16.4 osType-iOS");
+            assertEquals(e.getMessage(),"Device Not found with deviceName-iPhone 14 osVersion-16.4 osType-iOS");
         }
     }
 
@@ -55,7 +55,7 @@ public class SimulatorTest {
     public void getSimulatorStateTest() throws Throwable {
         simulatorManager = new SimulatorManager();
         String simulatorState = simulatorManager.getSimulatorState(
-                "iPhone 14s", "16.4", "iOS");
+                "iPhone 14", "16.4", "iOS");
         assertNotNull(simulatorState);
     }
 
@@ -103,9 +103,9 @@ public class SimulatorTest {
     public void getDeviceDetails() throws Throwable {
         simulatorManager = new SimulatorManager();
         String iOSUDID = simulatorManager.getSimulatorUDID
-                ("iPhone 14s", "11.3", "iOS");
+                ("iPhone 14", "11.3", "iOS");
         Device deviceDetails = simulatorManager.getSimulatorDetailsFromUDID(iOSUDID);
-        assertEquals(deviceDetails.getName(),"iPhone 14s");
+        assertEquals(deviceDetails.getName(),"iPhone 14");
         assertEquals(deviceDetails.getDeviceModel(),"iPhone8,1");
     }
 
