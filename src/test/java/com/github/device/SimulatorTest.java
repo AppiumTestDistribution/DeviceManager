@@ -24,8 +24,7 @@ public class SimulatorTest {
     @Test
     public void getSimulatorUDID() throws Throwable {
         simulatorManager = new SimulatorManager();
-        String simulatorUDID = simulatorManager.getSimulatorUDID
-                ("iPhone 17", "26.0", "iOS");
+        String simulatorUDID = simulatorManager.getSimulatorUDID("iPhone 17", "26.0", "iOS");
         assertTrue(simulatorUDID.length() == 36);
     }
 
@@ -33,8 +32,7 @@ public class SimulatorTest {
     public void throwExceptionWhenInvalidOSVersionIsGiven() throws Throwable {
         simulatorManager = new SimulatorManager();
         try {
-            simulatorManager.getSimulatorUDID
-                    ("iPhone 17", "9.99" , "iOS");
+            simulatorManager.getSimulatorUDID("iPhone 17", "9.99" , "iOS");
         } catch (RuntimeException e) {
             assertEquals(e.getMessage(),"Device Not found with deviceName-iPhone 17 osVersion-9.99 osType-iOS");
         }
@@ -44,8 +42,7 @@ public class SimulatorTest {
     public void throwExceptionWhenInvalidDeviceNameVersionIsGiven() throws Throwable {
         simulatorManager = new SimulatorManager();
         try {
-            simulatorManager.getSimulatorUDID
-                    ("iPhone 17ss", "26.0", "iOS");
+            simulatorManager.getSimulatorUDID("iPhone 17ss", "26.0", "iOS");
         } catch (RuntimeException e) {
             assertEquals(e.getMessage(),"Device Not found with deviceName-iPhone 17ss osVersion-26.0 osType-iOS");
         }
@@ -54,33 +51,29 @@ public class SimulatorTest {
     @Test
     public void getSimulatorStateTest() throws Throwable {
         simulatorManager = new SimulatorManager();
-        String simulatorState = simulatorManager.getSimulatorState(
-                "iPhone 17", "26.0", "iOS");
+        String simulatorState = simulatorManager.getSimulatorState("iPhone 17", "26.0", "iOS");
         assertNotNull(simulatorState);
     }
 
     @Test
     public void bootSimulatorAndCheckStatus() throws Throwable {
         simulatorManager = new SimulatorManager();
-        simulatorManager.bootSimulator(
-                "iPhone 17", "26.0", "iOS");
-        String deviceState = simulatorManager.getSimulatorState("iPhone 17",
-                "26.0", "iOS");
+        simulatorManager.bootSimulator("iPhone 17", "26.0", "iOS");
+        String deviceState = simulatorManager.getSimulatorState("iPhone 17", "26.0", "iOS");
+
         assertEquals(deviceState,"Booted");
     }
 
     @Test
     public void installApp() throws Throwable {
         simulatorManager = new SimulatorManager();
-        simulatorManager.installAppOnSimulator("iPhone 17", "26.0", "iOS"
-        ,System.getProperty("user.dir") + "/VodQAReactNative.app");
+        simulatorManager.installAppOnSimulator("iPhone 17", "26.0", "iOS", System.getProperty("user.dir") + "/VodQAReactNative.app");
     }
 
     @Test
     public void uninstallApp() throws Throwable {
         simulatorManager = new SimulatorManager();
-        simulatorManager.uninstallAppFromSimulator("iPhone 17", "26.0", "iOS"
-                , "com.hariharanweb");
+        simulatorManager.uninstallAppFromSimulator("iPhone 17", "26.0", "iOS", "com.hariharanweb");
     }
 
     @Test
@@ -88,7 +81,7 @@ public class SimulatorTest {
         simulatorManager = new SimulatorManager();
         long randomNumber = System.currentTimeMillis();
         String deviceName = "srini" + randomNumber;
-
+      
         simulatorManager.createSimulator(deviceName, "iPhone 17", "26.0","iOS");
         assertNotNull(simulatorManager.getSimulatorState(deviceName, "26.0", "iOS"));
         simulatorManager.deleteSimulator(deviceName, "26.0", "iOS");
@@ -102,8 +95,7 @@ public class SimulatorTest {
     @Test
     public void getDeviceDetails() throws Throwable {
         simulatorManager = new SimulatorManager();
-        String iOSUDID = simulatorManager.getSimulatorUDID
-                ("iPhone 17", "26.0", "iOS");
+        String iOSUDID = simulatorManager.getSimulatorUDID("iPhone 17", "26.0", "iOS");
         Device deviceDetails = simulatorManager.getSimulatorDetailsFromUDID(iOSUDID);
         assertEquals(deviceDetails.getName(),"iPhone 17");
         assertEquals(deviceDetails.getDeviceModel(),"iPhone8,1");
@@ -112,10 +104,8 @@ public class SimulatorTest {
     @Test
     public void captureScreenshot() throws Throwable {
         simulatorManager = new SimulatorManager();
-        simulatorManager.bootSimulator(
-                "iPhone 17", "26.0", "iOS");
-        String iOSUDID = simulatorManager.getSimulatorUDID
-                ("iPhone 17", "26.0", "iOS");
+        simulatorManager.bootSimulator("iPhone 17", "26.0", "iOS");
+        String iOSUDID = simulatorManager.getSimulatorUDID("iPhone 17", "26.0", "iOS");
         simulatorManager.captureScreenshot(iOSUDID,"simulator",
                 System.getProperty("user.dir") + "/target/", "jpeg");
         assertTrue(new File(System.getProperty("user.dir")
@@ -137,8 +127,7 @@ public class SimulatorTest {
     @Test
     public void uploadMediaToSimulatorTest() throws Throwable {
         simulatorManager = new SimulatorManager();
-        simulatorManager.uploadMediaToSimulator("iPhone 17", "26.0", "iOS",
-                "/Users/ssekar/Desktop/GC_BCPage.png");
+        simulatorManager.uploadMediaToSimulator("iPhone 17", "26.0", "iOS", "/Users/ssekar/Desktop/GC_BCPage.png");
     }
 
     @Test
@@ -166,8 +155,7 @@ public class SimulatorTest {
     @Test
     public void getOSandVersionLatest() throws Throwable {
         simulatorManager = new SimulatorManager();
-        String iOSUDID = simulatorManager.getSimulatorUDID
-                ("iPhone 17", "26.0", "iOS");
+        String iOSUDID = simulatorManager.getSimulatorUDID("iPhone 17", "26.0", "iOS");
         Device deviceDetails = simulatorManager.getSimulatorDetailsFromUDID(iOSUDID);
         assertEquals(deviceDetails.getOsVersion(),"26.0");
         assertEquals(deviceDetails.getOs(),"iOS");
