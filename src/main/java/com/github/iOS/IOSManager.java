@@ -7,7 +7,6 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,8 +16,9 @@ public class IOSManager implements Manager {
     private final static int IOS_UDID_LENGTH = 40;
     private final static int SIM_UDID_LENGTH = 36;
     JSONObject iOSDevices;
-    String profile = "system_profiler SPUSBDataType | sed -n -E -e '/(iPhone|iPad|iPod)/"
-        + ",/Serial/s/ *Serial Number: *(.+)/\\1/p'";
+    /*String profile = "system_profiler SPUSBDataType | sed -n -E -e '/(iPhone|iPad|iPod)/"
+        + ",/Serial/s/ *Serial Number: *(.+)/\\1/p'";*/
+    String profile = "ioreg -p IOUSB -l -w 0 | awk -F\\\" '/iPhone|iPad|iPod/ {found=1} found && /USB Serial Number/ {print $4; found=0}'";
 
     /*String profile = "idevice_id --list";*/
 
@@ -30,10 +30,10 @@ public class IOSManager implements Manager {
     @Override
     public Device getDevice(String udid) {
         Optional<Device> device = getDevices().stream().filter(d ->
-            udid.equals(d.getUdid())).findFirst();
+                udid.equals(d.getUdid())).findFirst();
         return device.orElseThrow(() ->
-            new RuntimeException("Provided DeviceUDID " + udid
-                + " is not found on the machine")
+                new RuntimeException("Provided DeviceUDID " + udid
+                        + " is not found on the machine")
         );
     }
 
@@ -54,13 +54,13 @@ public class IOSManager implements Manager {
     public JSONObject getDeviceInfo(String udid) throws InterruptedException, IOException {
 
         String model = cmd.runProcessCommandToGetDeviceID("ideviceinfo -u "
-            + udid + " | grep ProductType").replace("\n", "");
+                + udid + " | grep ProductType").replace("\n", "");
 
         String name = cmd.runProcessCommandToGetDeviceID("idevicename --udid " + udid);
         String osVersion = cmd.runProcessCommandToGetDeviceID("ideviceinfo --udid "
-            + udid
-            + " | grep ProductVersion").replace("ProductVersion:", "")
-            .replace("\n", "").trim();
+                        + udid
+                        + " | grep ProductVersion").replace("ProductVersion:", "")
+                .replace("\n", "").trim();
 
         iOSDevices.put("deviceModel", model);
         iOSDevices.put("udid", udid);
@@ -83,7 +83,7 @@ public class IOSManager implements Manager {
             String[] iosDevices = getIOSDeviceID.get().split("\n");
             for (String iosDevice : iosDevices) {
                 if (iosDevice.length() == 24) {
-                     iosDeviceUDIDS.add(addChar(iosDevice, '-', 8));
+                    iosDeviceUDIDS.add(addChar(iosDevice, '-', 8));
                 } else {
                     iosDeviceUDIDS.add(iosDevice);
                 }
